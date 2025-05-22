@@ -4,12 +4,10 @@ import os
 
 app = Flask(__name__)
 
-# Chemin vers le fichier CSV INSEE
 CSV_PATH = os.path.join(os.path.dirname(__file__), "prenom.csv")
 
 prenoms = {}
 
-# Charger le CSV une fois au démarrage
 def charger_prenoms():
     global prenoms
     prenoms = {}
@@ -17,7 +15,12 @@ def charger_prenoms():
         reader = csv.DictReader(f, delimiter=';')
         for row in reader:
             prenom = row['preusuel'].strip().lower()
-            nombre = int(row['nombre'])
+            if prenom.startswith('_'):
+                continue  # Ignore les "_PRENOMS_RARES"
+            try:
+                nombre = int(row['nombre'])
+            except:
+                continue
             if prenom not in prenoms:
                 prenoms[prenom] = 0
             prenoms[prenom] += nombre
