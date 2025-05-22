@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>💸 Combien vaut ton prénom ? 💸</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #181818; color: #fff; text-align: center; padding: 60px; }
+    input { padding: 12px; font-size: 22px; border-radius: 6px; border: none; width: 260px; }
+    button { padding: 12px 35px; font-size: 22px; border-radius: 6px; background: #2ecc40; color: #fff; border: none; cursor: pointer; margin-left: 10px; }
+    .result { margin-top: 35px; font-size: 32px; font-weight: bold; }
+    .pop { margin-top: 12px; font-size: 17px; color: #888; }
+    .footer { margin-top: 60px; color: #555; font-size: 13px; }
+    @media (max-width: 600px) {
+      body { padding: 20px; }
+      input, button { font-size: 16px; }
+      .result { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>💸 Valeur de ton blaze 💸</h1>
+  <input type="text" id="prenom" placeholder="Tape ton prénom...">
+  <button onclick="calculePrix()">Calcule !</button>
+  <div class="result" id="prix"></div>
+  <div class="pop" id="pop"></div>
+  <div class="footer">
+    <b>Données officielles INSEE (1900-2022)</b> · Projet par la street, pour la street.<br>
+    <a href="https://www.data.gouv.fr/fr/datasets/fichier-des-prenoms/" style="color:#2ecc40" target="_blank">Source : data.gouv.fr</a>
+  </div>
+  <script>
+    function calculePrix() {
+      var prenom = document.getElementById('prenom').value.trim();
+      if (prenom === '') {
+        document.getElementById('prix').innerHTML = "Wallah, tape un prénom din'omk !";
+        document.getElementById('pop').innerHTML = '';
+        return;
+      }
+      fetch('/api/prix-prenom?prenom=' + encodeURIComponent(prenom))
+        .then(r => r.json())
+        .then(d => {
+          document.getElementById('prix').innerHTML =
+            "Prix du blaze : <span style='color:#ffd700'>" + d.prix + " €</span>";
+          document.getElementById('pop').innerHTML =
+            (d.popularite > 0) ?
+            "(Popularité : " + d.popularite + " personnes depuis 1900)" :
+            "(Ce blaze est tellement rare que t’es une légende frère)";
+        })
+        .catch(() => {
+          document.getElementById('prix').innerHTML = "Erreur serveur, la honte !";
+          document.getElementById('pop').innerHTML = "";
+        });
+    }
+  </script>
+</body>
+</html>
