@@ -10,6 +10,8 @@
     .result { margin-top: 35px; font-size: 32px; font-weight: bold; }
     .pop { margin-top: 12px; font-size: 17px; color: #888; }
     .footer { margin-top: 60px; color: #555; font-size: 13px; }
+    #avatar { margin-top: 40px; border-radius: 50%; border: 3px solid #2ecc40; width: 120px; display: none; }
+    #verdict { margin-top: 18px; font-size: 19px; font-weight: bold; }
     @media (max-width: 600px) {
       body { padding: 20px; }
       input, button { font-size: 16px; }
@@ -23,6 +25,8 @@
   <button onclick="calculePrix()">Calcule !</button>
   <div class="result" id="prix"></div>
   <div class="pop" id="pop"></div>
+  <img id="avatar">
+  <div id="verdict"></div>
   <div class="footer">
     <b>Source : 
       <a href="https://www.data.gouv.fr/fr/datasets/fichier-des-prenoms-depuis-1900/" 
@@ -32,11 +36,29 @@
     Projet signé <b>s00r1</b> – 2024
   </div>
   <script>
+    function getAvatarStyle(prix) {
+      if (prix >= 180) return "rings";         // Super collector
+      if (prix >= 120) return "adventurer";    // Stylé BD
+      if (prix >= 50)  return "fun-emoji";     // Fun
+      return "bottts";                         // lambda/robot
+    }
+
+    function getVerdict(prix) {
+      if (prix >= 180) return "🔥 Blaze collector, t’es une légende frère !";
+      if (prix >= 120) return "💎 Blaze stylé, respect !";
+      if (prix >= 50)  return "😏 Blaze classique, ça passe crème.";
+      return "🦾 Blaze de robot, t’es discret mais efficace.";
+    }
+
     function calculePrix() {
       var prenom = document.getElementById('prenom').value.trim();
+      var avatar = document.getElementById('avatar');
+      var verdict = document.getElementById('verdict');
       if (prenom === '') {
         document.getElementById('prix').innerHTML = "Wallah, tape un prénom din'omk !";
         document.getElementById('pop').innerHTML = '';
+        avatar.style.display = "none";
+        verdict.innerHTML = '';
         return;
       }
       fetch('/api/prix-prenom?prenom=' + encodeURIComponent(prenom))
@@ -48,10 +70,17 @@
             (d.popularite > 0) ?
             "(Popularité : " + d.popularite + " personnes depuis 1900)" :
             "(Ce blaze est tellement rare que t’es une légende frère)";
+          // Génère avatar adapté au prix
+          let style = getAvatarStyle(d.prix);
+          avatar.src = "https://api.dicebear.com/7.x/" + style + "/svg?seed=" + encodeURIComponent(prenom);
+          avatar.style.display = "inline-block";
+          verdict.innerHTML = getVerdict(d.prix);
         })
         .catch(() => {
           document.getElementById('prix').innerHTML = "Erreur serveur, la honte !";
           document.getElementById('pop').innerHTML = "";
+          avatar.style.display = "none";
+          verdict.innerHTML = '';
         });
     }
   </script>
