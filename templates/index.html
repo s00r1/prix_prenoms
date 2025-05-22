@@ -70,9 +70,9 @@
             (d.popularite > 0) ?
             "(Popularité : " + d.popularite + " personnes depuis 1900)" :
             "(Ce blaze est tellement rare que t’es une légende frère)";
-          // Génère avatar adapté au prix
+          // Génère avatar adapté au prix, et ajoute random pour casser le cache
           let style = getAvatarStyle(d.prix);
-          avatar.src = "https://api.dicebear.com/7.x/" + style + "/svg?seed=" + encodeURIComponent(prenom);
+          avatar.src = "https://api.dicebear.com/7.x/" + style + "/svg?seed=" + encodeURIComponent(prenom) + "&r=" + Math.random();
           avatar.style.display = "inline-block";
           verdict.innerHTML = getVerdict(d.prix);
         })
