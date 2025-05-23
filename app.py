@@ -3,14 +3,105 @@ import csv
 import os
 import math
 import random
+import json
 
 app = Flask(__name__)
 
 CSV_PATH = os.path.join(os.path.dirname(__file__), "prenom.csv")
 COMPTEUR_PATH = os.path.join(os.path.dirname(__file__), "compteur.txt")
+BLAZE_HITS_PATH = os.path.join(os.path.dirname(__file__), "blaze_hits.json")
 
 prenoms = {}
 genres_dict = {}
+
+SURNOMS_STREET = [
+    "La Menace", "Turbo", "Le Sang", "Le Chacal", "El Maestro", "La Rafale", "Big Mac", "Le Pigeon", "Le Fou", "La Boulette",
+    "Grillav", "La Foudre", "El Gitan", "Bougnoule", "Don Kebab", "El Boulette", "Ratatouille", "El Poulet", "La Rafale", "Cobra"
+]
+CLANS = [
+    "Famille du Ghetto", "Clan du Croissant", "Dynastie des Potos", "Secte du Grillav", "Team du Kebab", "Crew du Zebi",
+    "Brigade du Quartier", "Ligue des Babtous", "Famille Siffredi", "La Street Family"
+]
+CITATIONS = [
+    "Avec un blaze pareil, tu croques la vie à pleine dents, wallah.",
+    "On te cherche, mais personne t’égale, frère.",
+    "T’as la street dans l’ADN, c’est validé.",
+    "Les jaloux vont maigrir, la famille.",
+    "Ta daronne pleure de fierté chaque matin.",
+    "Le destin, c’est toi qui l’inventes.",
+    "Zarma tu régales la ville avec ce prénom.",
+    "Avec un blaze comme ça, même les condés veulent un selfie.",
+    "Ton prénom résonne jusqu’au bled.",
+    "T’es la légende du Hall 7, wallah.",
+]
+HOROSCOPE = [
+    "Aujourd'hui tu vas esquiver les condés, inchallah.",
+    "Prépare-toi, la chance arrive, mais pas pour tout le monde.",
+    "Un kebab t’attend ce midi, la street te sourit.",
+    "Reste à l’affût, un coup de trafalgar arrive.",
+    "Le respect s’obtient, tu le sais déjà.",
+    "La BAC est dans le secteur, baisse le son.",
+    "Les astres valident ta dégaine, fais-toi plaisir.",
+    "T’as la vibe, profite, mais oublie pas la mif.",
+    "Quelqu’un va t’appeler, ça va changer ta journée.",
+    "C’est ton jour de gloire… ou de galère, choisis bien."
+]
+CRED_BADGES = [
+    (90, "🦾 Crédibilité absolue – La street te salue !"),
+    (75, "💯 Validé par tous les quartiers !"),
+    (60, "🔥 Respecté dans la plupart des halls."),
+    (40, "🫣 Moyen, évite d’aller à La Courneuve seul."),
+    (20, "💤 Crédibilité en PLS, t’es invisible."),
+    (0,  "🥔 Zarma tu fais pitié frère, personne te calcule.")
+]
+INSULTES = [
+    "T’es une chips wallah !",
+    "Même ta daronne voulait un autre blaze.",
+    "Avec ce prénom tu fais même pas peur aux pigeons.",
+    "Wallah c’est éclaté au sol ton blaze.",
+    "La honte à la famille, zebi.",
+    "La street t’a oublié avant même de te connaître.",
+    "T’es en soldes toute l’année avec ce blaze.",
+    "Même les robots ont plus de style.",
+    "T’es plus rare qu’un kebab végane."
+]
+PRENOMS_GITANS = [
+    "Zlatko", "Donovan", "Nikita", "Mickaëlo", "Django", "Manouchka", "Angelo", "Tzigane", "Mirko", "Rodrigo", "Ludivina", "Petra", "Mélinda", "Raymondo", "Maria-La-Loco"
+]
+
+def lire_blaze_hits():
+    if os.path.exists(BLAZE_HITS_PATH):
+        with open(BLAZE_HITS_PATH, 'r') as f:
+            try:
+                return json.load(f)
+            except:
+                return {}
+    return {}
+
+def incr_blaze_hits(blaze):
+    hits = lire_blaze_hits()
+    hits[blaze] = hits.get(blaze, 0) + 1
+    with open(BLAZE_HITS_PATH, 'w') as f:
+        json.dump(hits, f)
+    return hits[blaze]
+
+def leaderboard():
+    hits = lire_blaze_hits()
+    sorted_hits = sorted(hits.items(), key=lambda x: x[1], reverse=True)
+    return [{"prenom": p, "tests": n} for p, n in sorted_hits[:10]]
+
+def lire_compteur():
+    try:
+        with open(COMPTEUR_PATH, "r") as f:
+            return int(f.read())
+    except:
+        return 0
+
+def incrementer_compteur():
+    compteur = lire_compteur() + 1
+    with open(COMPTEUR_PATH, "w") as f:
+        f.write(str(compteur))
+    return compteur
 
 def charger_prenoms():
     global prenoms, genres_dict
@@ -35,7 +126,6 @@ def charger_prenoms():
                 genre_raw[prenom].add('M')
             elif sexe == 2:
                 genre_raw[prenom].add('F')
-    # On a pour chaque prénom un set: {"M"}, {"F"} ou {"M", "F"}
     genres_dict = {k: v for k, v in genre_raw.items()}
 
 charger_prenoms()
@@ -50,19 +140,6 @@ def compter_voyelles_consonnes(prenom):
 def compter_lettres_rares(prenom):
     rares = set("wqzxkyjhç")
     return sum(1 for c in prenom if c in rares)
-
-def lire_compteur():
-    try:
-        with open(COMPTEUR_PATH, "r") as f:
-            return int(f.read())
-    except:
-        return 0
-
-def incrementer_compteur():
-    compteur = lire_compteur() + 1
-    with open(COMPTEUR_PATH, "w") as f:
-        f.write(str(compteur))
-    return compteur
 
 @app.route('/')
 def index():
@@ -96,8 +173,6 @@ def prix_prenom():
         logfreq = math.log(freq + 1)
         logmax = math.log(FREQ_MAX + 1)
         base = valeur_max * (1 - (logfreq / logmax))
-
-        # BOOSTS ENORMES pour blazes pas chers, plus doux au-dessus
         if base < 50:
             bonus_court = max(0, 7 - n_lettres) * 18
             bonus_voyelles = n_voyelles * 10
@@ -118,14 +193,19 @@ def prix_prenom():
             bonus_voyelles = n_voyelles * 0.3
             malus_consonnes = n_consonnes * -0.12
             boost_rare = n_rares * 1
-
         bonus_tiret = 10 if is_tiret else 0
-
         prix = base + bonus_court + bonus_voyelles + malus_consonnes + boost_rare + bonus_tiret
         prix += random.uniform(-4, 7)
     prix = min(valeur_max, max(valeur_min, round(prix, 2)))
-
-    # On retourne aussi le "genre" trouvé
+    n_tests = incr_blaze_hits(prenom)
+    surnom = random.choice(SURNOMS_STREET)
+    clan = random.choice(CLANS)
+    citation = random.choice(CITATIONS)
+    respect = min(100, max(3, int(100 - abs(prix - 100) + random.uniform(-8, 8))))
+    cred_txt = next(txt for seuil, txt in CRED_BADGES if respect >= seuil)
+    original = 100 - int((freq / FREQ_MAX) * 100) if freq else 100
+    horoscope = random.choice(HOROSCOPE)
+    insulte = random.choice(INSULTES)
     return jsonify({
         "prix": prix,
         "popularite": freq,
@@ -134,10 +214,63 @@ def prix_prenom():
         "consonnes": n_consonnes,
         "lettres_rares": n_rares,
         "bonus_tiret": is_tiret,
-        "genre": genre_code
+        "genre": genre_code,
+        "surnom": surnom,
+        "clan": clan,
+        "citation": citation,
+        "respect": respect,
+        "cred_txt": cred_txt,
+        "original": original,
+        "n_tests": n_tests,
+        "horoscope": horoscope,
+        "insulte": insulte
     })
 
-# ------ ZIGZIG API : calcul 0 à 20 + phrase mdr et image associée ------
+@app.route('/api/leaderboard')
+def api_leaderboard():
+    return jsonify(leaderboard())
+
+@app.route('/api/quiz')
+def api_quiz():
+    valid_prenoms = [p for p in prenoms.keys() if prenoms[p] > 0]
+    quiz_prenom = random.choice(valid_prenoms)
+    freq = prenoms.get(quiz_prenom, 0)
+    n_lettres = len(quiz_prenom)
+    n_voyelles, n_consonnes = compter_voyelles_consonnes(quiz_prenom)
+    n_rares = compter_lettres_rares(quiz_prenom)
+    is_tiret = '-' in quiz_prenom or "'" in quiz_prenom
+    if freq == 0:
+        prix = 200
+    else:
+        logfreq = math.log(freq + 1)
+        logmax = math.log(FREQ_MAX + 1)
+        base = 200 * (1 - (logfreq / logmax))
+        if base < 50:
+            bonus_court = max(0, 7 - n_lettres) * 18
+            bonus_voyelles = n_voyelles * 10
+            malus_consonnes = n_consonnes * -6
+            boost_rare = n_rares * 24
+        elif base < 100:
+            bonus_court = max(0, 7 - n_lettres) * 5
+            bonus_voyelles = n_voyelles * 2.5
+            malus_consonnes = n_consonnes * -1.5
+            boost_rare = n_rares * 8
+        elif base < 150:
+            bonus_court = max(0, 7 - n_lettres) * 2
+            bonus_voyelles = n_voyelles * 1
+            malus_consonnes = n_consonnes * -0.5
+            boost_rare = n_rares * 2.5
+        else:
+            bonus_court = max(0, 7 - n_lettres) * 0.7
+            bonus_voyelles = n_voyelles * 0.3
+            malus_consonnes = n_consonnes * -0.12
+            boost_rare = n_rares * 1
+        bonus_tiret = 10 if is_tiret else 0
+        prix = base + bonus_court + bonus_voyelles + malus_consonnes + boost_rare + bonus_tiret
+        prix += random.uniform(-4, 7)
+    prix = min(200, max(10, round(prix, 2)))
+    return jsonify({"prenom": quiz_prenom.capitalize(), "prix": prix})
+
 @app.route('/api/zigzig')
 def zigzig():
     prenom = request.args.get("prenom", "").strip().lower()
@@ -145,7 +278,6 @@ def zigzig():
     n_lettres = len(prenom)
     n_voyelles, n_consonnes = compter_voyelles_consonnes(prenom)
     n_rares = compter_lettres_rares(prenom)
-    # Algo "folklorique" :
     score = 5
     score += max(0, n_lettres - 4) * 1.5
     score += n_voyelles * 0.8
@@ -155,97 +287,98 @@ def zigzig():
         score += 1.5
     score += random.uniform(-2, 2)
     score = int(max(0, min(20, round(score))))
-
-    # Phrase et image selon genre et score :
     if genre == "F":
         phrases = [
-            "❄️ Franchement, tu zigzig jamais, c'est clean.",
-            "😇 Sage, t'as même peur d'un bisou.",
-            "🍯 Tu fais rêver les darons, mais c'est tout.",
-            "👸 Classe, tu fais tourner les têtes, mais c'est discret.",
-            "😏 Discrète mais efficace, tu zigzig à ta façon.",
-            "💋 Tu fais des ravages au bal du quartier.",
-            "💄 Toujours apprêtée, tu laisses pas indifférent.",
-            "🌹 Les mecs sont à genoux, normal.",
-            "🔥 T'es une vraie tentatrice, ça commence à chauffer.",
-            "💃 T’es la reine des soirées, tout le monde veut ton 06.",
-            "🥵 Les gars du quartier parlent que de toi.",
-            "💍 On veut tous t'épouser, wallah.",
-            "🚗 T’as déjà brisé 5 cœurs, y a la queue au kebab.",
-            "🍑 Toi t'es la daronne de la zigzig.",
-            "🚨 La BAC surveille tes moves, c'est chaud.",
-            "🦄 T’es unique, tu zigzig à l’international.",
-            "🍾 T’as déjà des groupies, même sur LinkedIn.",
-            "💃 Le quartier s'enflamme à chaque fois que tu passes.",
-            "🏆 Même Rocco te respecte, ça en dit long.",
-            "👑 Queen, t’as level max, tout le monde veut te gérer."
+            "Tu zigzig même pas les regards !",
+            "Aucune daronne n’est jalouse de toi.",
+            "Bof, niveau zigzig t’es sage.",
+            "T’as pas fait vibrer beaucoup de mecs.",
+            "Ton nom fait plus fuir que fantasmer.",
+            "Zarma la voisine te regarde même pas.",
+            "T’as un crush, mais il t’a ghosté.",
+            "Sympa mais discrète, on te voit pas !",
+            "Mi-fleur bleue, mi-chiante.",
+            "Commence à sortir plus pour voir du monde !",
+            "Zigzig léger, ça s'échauffe.",
+            "Pas mal, la street valide tes vibes.",
+            "Bientôt la queen des DM !",
+            "Tu fais tourner des têtes, wallah.",
+            "La légende locale du zigzig.",
+            "Ça matche sur Tinder, fais gaffe.",
+            "La rivale des influenceuses.",
+            "Méfie-toi, les jalouses t’espionnent.",
+            "Wallah tu traumatise les gars du quartier.",
+            "C’est bon, t’as cassé tous les cœurs, zebi !"
         ]
-        images = [
-            "unicorn", "fun-emoji", "personas", "pixel-art", "adventurer", "micah", "croodles", "miniavs",
-            "rings", "notionists", "thumbs", "big-ears", "adventurer-neutral", "bottts", "shapes"
-        ]
-    elif genre == "M":
-        phrases = [
-            "😇 Frérot, tu zigzig jamais, t’es en mode abstinent.",
-            "🥚 Niveau 0, t’es pur comme l’eau de source.",
-            "😴 Toujours solo, le néant total.",
-            "🧢 Zarma tu dragues, mais ça prend pas.",
-            "😬 T’as eu des dates… sur Candy Crush.",
-            "👦 Le seul truc que t’as pécho c’est la grippe.",
-            "🕵️‍♂️ Discret, mais un peu de taff reste à faire.",
-            "🐱 T’es soft, tu grattes un bisou tous les 2 ans.",
-            "😏 La street te repère, tu montes en puissance.",
-            "🚦 Ça commence à swiper sur ton blaze.",
-            "💪 Déjà t’as pécho à la fête du kebab, solide.",
-            "🔥 Ça chauffe, tu passes au next level.",
-            "💸 Tu gères, les meufs sortent le chéquier.",
-            "🏎️ Tu fais des tours dans la city, les regards suivent.",
-            "💯 Validé par les rebeus et les daronnes.",
-            "👑 Les meufs du quartier font la queue.",
-            "🦾 Niveau boss, tu zigzig à volonté.",
-            "🚨 Arrête, c’est dangereux là, tu fais trembler le 93.",
-            "🦍 Niveau Rocco Siffredi, le king du zigzig.",
-            "🌋 H24, tu fais plaisir à toutes les femmes, même la voisine de 60 piges."
-        ]
-        images = [
-            "bottts", "pixel-art", "rings", "big-ears", "miniavs", "adventurer", "micah", "shapes",
-            "personas", "croodles", "fun-emoji", "adventurer-neutral", "notionists", "thumbs"
-        ]
+        avatars = ["notionists", "adventurer-neutral", "micah", "miniavs", "fun-emoji", "personas", "pixel-art", "rings", "shapes", "bottts"]
     else:
         phrases = [
-            "😳 On sait pas trop, tu zigzig à ta sauce, tu choisis qui tu veux.",
-            "🤡 Prénom mystère, le zigzig c’est selon l’humeur.",
-            "🦄 Ambivalent, t’es inclassable, c’est freestyle.",
-            "💣 T’es là pour tout le monde, partage c’est la base.",
-            "🎭 Chameleon, tu zigzig tout le monde, personne safe.",
-            "👽 Tu zigzig en secret, on a pas les stats.",
-            "🍻 T’es open, tous les genres y passent.",
-            "🎲 C’est random, comme ta vie sentimentale.",
-            "🧬 Le zigzig n’a pas de sexe, toi non plus.",
-            "🌀 T’es le bug de la matrice du zigzig.",
-            "👁 Tu séduis même les robots, c’est fort.",
-            "🦾 Polyvalent, tu te prives de rien.",
-            "🌈 Arlequin du love, t’es en roue libre.",
-            "⚡️ T’es une légende des deux côtés.",
-            "🚁 Même la NASA te cherche.",
-            "🛸 OVNI du zigzig, on sait pas te classer.",
-            "🐍 Caméléon, t’adaptes selon le terrain.",
-            "🥇 Polyzig, y a pas de limites.",
-            "📛 T’es le badge universel du zigzig.",
-            "👑 Masterclass universelle du zigzig !"
+            "Aucune meuf veut te zigzig, wallah !",
+            "Même Tinder te met sur écoute.",
+            "Zigzig inexistant, c’est la dèche.",
+            "Les keufs te calculent plus que les meufs.",
+            "Ton blaze fait fuir les zouz.",
+            "Zarma t’es pote avec tout le monde, mais rien de plus.",
+            "T’as tenté, mais la friendzone t’a ken.",
+            "On t’appelle Casimir, pas Casanova.",
+            "Moyen, la mif croit encore en toi.",
+            "T’as brillé au mariage de ta cousine, c’est tout.",
+            "Zigzig discret, mais prometteur.",
+            "La street commence à parler de toi.",
+            "Tu peux finir en légende, inchallah.",
+            "T’es validé à Grigny.",
+            "Les zouz aiment bien ton style.",
+            "T’es l’espoir du quartier.",
+            "On te respecte au barbecue.",
+            "Wallah, tu peux tout casser cet été.",
+            "La daronne commence à s’inquiéter.",
+            "Rocco, tu fais plaisir à toutes les femmes !"
         ]
-        images = [
-            "croodles", "miniavs", "rings", "personas", "notionists", "fun-emoji", "pixel-art", "shapes", "adventurer-neutral"
-        ]
-    phrase = phrases[min(score, len(phrases) - 1)]
-    avatar = images[score % len(images)]
-    # url de l’avatar marrant pour le score de zigzig
+        avatars = ["bottts", "rings", "adventurer", "pixel-art", "personas", "notionists", "miniavs", "adventurer-neutral", "micah", "shapes"]
+    phrase = phrases[min(score, len(phrases)-1)]
+    avatar = avatars[score % len(avatars)]
     url = f"https://api.dicebear.com/7.x/{avatar}/svg?seed=zigzig{score}{prenom}"
     return jsonify({
         "score": score,
         "phrase": phrase,
         "avatar": url
     })
+
+@app.route('/api/compatibilite')
+def api_compatibilite():
+    prenom1 = request.args.get("prenom1", "").strip().lower()
+    prenom2 = request.args.get("prenom2", "").strip().lower()
+    if not prenom1 or not prenom2:
+        return jsonify({"ok": False, "msg": "Donne deux blazes !"})
+    base = sum(ord(x) for x in prenom1 + prenom2)
+    compat = ((base % 97) + random.randint(0, 20)) % 101
+    msg = f"Compatibilité : {compat} % – "
+    if compat > 90:
+        msg += "Parfait, vous allez faire 12 gosses à Grigny !"
+    elif compat > 70:
+        msg += "Solide, ça va buzzer sur Snap !"
+    elif compat > 50:
+        msg += "Pas mal, la street valide ce duo."
+    elif compat > 30:
+        msg += "Mouais, y'a un bail chelou."
+    else:
+        msg += "Laisse tomber, y'aura pas de zigzig."
+    return jsonify({"ok": True, "score": compat, "msg": msg})
+
+@app.route('/api/gitan')
+def api_gitan():
+    prenom = random.choice(PRENOMS_GITANS)
+    return jsonify({"prenom": prenom})
+
+@app.route('/api/insulte')
+def api_insulte():
+    prenom = request.args.get("prenom", "").strip().lower()
+    return jsonify({"insulte": random.choice(INSULTES)})
+
+@app.route('/api/son')
+def api_son():
+    # MOCK : à brancher avec une API de synthèse vocale si tu veux (moteur IA style PlayHT, ElevenLabs, etc.)
+    return jsonify({"url": "https://www.myinstants.com/media/sounds/ratpi-world.mp3"})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

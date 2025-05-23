@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>💸 Combien vaut ton prénom ? 💸</title>
+  <title>💸 Combien vaut ton blaze ? 💸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body { background: #181818; margin: 0; padding: 0; width: 100%; min-height: 100vh;}
@@ -10,52 +10,47 @@
       font-family: 'Segoe UI', Arial, sans-serif;
       color: #fff;
       text-align: center;
-      padding: 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
       align-items: center;
     }
     .container {
       width: 100%;
-      max-width: 390px;
+      max-width: 420px;
       margin: 0 auto;
-      padding: 24px 10px 0 10px;
-      box-sizing: border-box;
-      min-height: 90vh;
+      padding: 20px 6px 0 6px;
+      min-height: 89vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
     }
     h1 {
       font-size: 2.2em;
-      margin: 12px 0 20px 0;
+      margin: 12px 0 16px 0;
       letter-spacing: 1px;
       background: linear-gradient(90deg, #ffd700 60%, #2ecc40 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    input {
+    input, select {
       padding: 14px;
-      font-size: 1.2em;
+      font-size: 1.1em;
       border-radius: 10px;
       border: none;
-      width: 95%;
+      width: 90%;
       max-width: 260px;
-      margin: 0 0 10px 0;
+      margin: 0 0 8px 0;
       background: #232323;
       color: #fff;
-      outline: none;
-      box-shadow: 0 1px 5px #0006;
+      box-shadow: 0 1px 6px #0006;
       text-align: center;
-      transition: border 0.2s;
+      transition: border 0.18s;
     }
-    input:focus { border: 2px solid #2ecc40; }
+    input:focus, select:focus { border: 2px solid #2ecc40; }
     button {
-      padding: 14px 40px;
-      font-size: 1.12em;
+      padding: 13px 33px;
+      font-size: 1.07em;
       border-radius: 10px;
       background: linear-gradient(90deg, #2ecc40 60%, #ffd700 100%);
       color: #232323;
@@ -63,104 +58,89 @@
       font-weight: bold;
       letter-spacing: 0.8px;
       cursor: pointer;
-      margin-left: 0;
-      margin-bottom: 20px;
-      margin-top: 5px;
-      transition: background 0.18s;
+      margin-bottom: 12px;
+      margin-top: 2px;
       box-shadow: 0 1px 8px #0005;
     }
     button:active { background: #ffd700; color: #111;}
-    .result { margin-top: 25px; font-size: 2.2em; font-weight: bold; min-height: 44px;}
-    .pop { margin-top: 10px; font-size: 1.07em; color: #b2b2b2; min-height: 20px;}
-    #details { margin-top: 7px; font-size: 1em; color: #b2ffb2; min-height: 20px;}
-    #avatar, #zigavatar { margin-top: 30px; border-radius: 50%; border: 3px solid #2ecc40; width: 115px; min-height: 115px; background: #1b1b1b;}
-    #verdict { margin-top: 17px; font-size: 1.2em; font-weight: bold; min-height: 28px;}
+    .result { margin-top: 19px; font-size: 2em; font-weight: bold; min-height: 36px;}
+    .pop { margin-top: 8px; font-size: 1.06em; color: #b2b2b2; min-height: 16px;}
+    #details { margin-top: 5px; font-size: 1em; color: #b2ffb2; min-height: 20px;}
+    #avatar, #zigavatar { margin-top: 24px; border-radius: 50%; border: 3px solid #2ecc40; width: 105px; min-height: 105px; background: #1b1b1b;}
+    #verdict { margin-top: 15px; font-size: 1.13em; font-weight: bold; min-height: 26px;}
+    .badge { padding: 6px 18px; border-radius: 12px; background: #ffd700; color: #181818; font-weight: bold; display: inline-block; margin: 10px 2px;}
+    .jauge {
+      margin: 11px auto 7px auto;
+      width: 84%;
+      height: 12px;
+      background: #292929;
+      border-radius: 10px;
+      box-shadow: 0 1px 7px #0007;
+      position: relative;
+    }
+    .jauge-bar {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #2ecc40 40%, #ffd700 100%);
+      transition: width 0.5s;
+    }
     .zig-container {
-      margin-top: 34px;
-      padding: 18px 12px 6px 12px;
+      margin-top: 28px;
+      padding: 15px 9px 6px 9px;
       background: #21212a;
-      border-radius: 18px;
+      border-radius: 16px;
       box-shadow: 0 2px 12px #0005;
-      width: 94%;
-      max-width: 370px;
+      width: 95%;
+      max-width: 390px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
     }
     #zigscore {
-      font-size: 1.3em;
+      font-size: 1.13em;
       font-weight: bold;
       color: #ffd700;
-      margin-bottom: 7px;
+      margin-bottom: 5px;
     }
-    #zigphrase {
-      font-size: 1.08em;
-      min-height: 28px;
-      margin-bottom: 9px;
+    #zigphrase { font-size: 1.03em; min-height: 22px; margin-bottom: 6px;}
+    .infos-buzz, .surnom, .clan, .citation, .horoscope, .badge-cred {
+      margin: 7px 0 0 0;
+      font-size: 1.07em;
+      color: #ffd700;
     }
+    .badge-cred { color: #2ecc40; font-weight: bold; margin-top:4px;}
     .footer {
       margin-top: auto;
-      padding: 18px 0 8px 0;
+      padding: 14px 0 8px 0;
       width: 100%;
       color: #555;
-      font-size: 0.98em;
+      font-size: 0.97em;
       text-align: center;
       background: none;
       line-height: 1.5;
     }
     .footer a { color: #2ecc40; text-decoration: underline; }
-    .compteur { color:#ffd700; margin-bottom:2px; font-size:1.05em;}
-    /* Modal genre */
-    #genre-modal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #0009;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1111;
-      display: none;
+    .compteur { color:#ffd700; margin-bottom:2px; font-size:1.03em;}
+    /* Blocs custom */
+    .street-bloc {
+      margin:23px auto 0 auto;
+      background: #23232a;
+      border-radius:16px;
+      padding: 13px;
+      max-width:370px;
+      box-shadow: 0 1px 12px #0003;
+      text-align:center;
     }
-    #genre-modal .box {
-      background: #222;
-      padding: 26px 16px 16px 16px;
-      border-radius: 17px;
-      min-width: 240px;
-      max-width: 95vw;
-      color: #ffd700;
-      font-size: 1.12em;
-      box-shadow: 0 2px 20px #0007;
-      text-align: center;
-      position: relative;
-    }
-    #genre-modal button {
-      margin: 17px 7px 0 7px;
-      font-size: 1.09em;
-      padding: 12px 18px;
-      border-radius: 8px;
-      background: #2ecc40;
-      color: #181818;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.14s;
-    }
-    #genre-modal button:hover {
-      background: #ffd700;
-      color: #181818;
-    }
+    .street-bloc h2 { color:#ffd700; font-size:1.11em; margin:0 0 7px 0;}
     @media (max-width: 600px) {
-      .container { max-width: 100vw; padding: 10px 0 0 0; }
-      h1 { font-size: 1.2em; margin: 7px 0 13px 0;}
-      input, button { font-size: 1em; padding: 11px;}
-      #avatar, #zigavatar { width: 90px; min-height: 90px; margin-top: 16px;}
-      .result { font-size: 1.3em;}
-      #details { font-size: 0.95em;}
-      #verdict { font-size: 1em; min-height: 22px;}
+      .container { max-width: 100vw; padding: 8px 0 0 0; }
+      h1 { font-size: 1.22em; margin: 7px 0 11px 0;}
+      input, button, select { font-size: 0.99em; padding: 10px;}
+      #avatar, #zigavatar { width: 80px; min-height: 80px;}
+      .result { font-size: 1.12em;}
       .footer { font-size: 0.91em; }
-      .compteur { font-size: 0.96em; }
-      .zig-container { font-size: 0.97em; padding: 13px 4px 4px 4px;}
+      .compteur { font-size: 0.95em; }
+      .zig-container { font-size: 0.96em; padding: 7px 2px 2px 2px;}
     }
     ::selection { background: #ffd70066; }
   </style>
@@ -175,6 +155,58 @@
     <div id="details"></div>
     <img id="avatar" style="display:none;">
     <div id="verdict"></div>
+    <div class="badge" id="badge-respect" style="display:none;"></div>
+    <div class="jauge" id="jauge-original" style="display:none;">
+      <div class="jauge-bar" id="jauge-bar-original"></div>
+    </div>
+    <div class="infos-buzz" id="buzzblock" style="display:none;">
+      Nombre de tests de ce blaze : <span id="n-tests"></span>
+    </div>
+    <div class="surnom" id="surnomblock" style="display:none;"></div>
+    <div class="clan" id="clanblock" style="display:none;"></div>
+    <div class="citation" id="citationblock" style="display:none;"></div>
+    <div class="horoscope" id="horoscopeblock" style="display:none;"></div>
+    <div class="badge-cred" id="badge-credblock" style="display:none;"></div>
+    <div class="street-bloc">
+      <button onclick="shareW()">Partager sur WhatsApp</button>
+      <button onclick="shareT()">Partager sur Twitter</button>
+      <button onclick="playSon()">Joue un son sale</button>
+    </div>
+    <audio id="audio-son"></audio>
+    <div class="street-bloc">
+      <button onclick="getInsulte()">Invente-moi une insulte street !</button>
+      <div id="insulte-result" style="margin-top:7px;min-height:18px; color:#ffd700; font-size:1.07em;"></div>
+    </div>
+    <!-- QUIZ -->
+    <div class="street-bloc">
+      <h2>🎲 Quiz du Blaze</h2>
+      <div id="quiz-question" style="margin-bottom:10px;"></div>
+      <input type="number" id="quiz-reponse" placeholder="Prix en €" style="width:85px; margin-bottom:7px; border-radius:8px; text-align:center;">
+      <button onclick="valideQuiz()" style="font-size:0.98em; margin-left:9px; margin-bottom:6px;">Valider</button>
+      <div id="quiz-resultat" style="margin-top:6px; min-height:20px; color:#ffd700;"></div>
+      <div id="quiz-score" style="margin-top:5px; font-size:0.99em; color:#2ecc40;"></div>
+      <button onclick="nouveauQuiz()" style="margin-top:11px; font-size:0.91em;">Nouveau quiz</button>
+    </div>
+    <!-- LEADERBOARD -->
+    <div class="street-bloc">
+      <h2>🏆 Top 10 des blazes testés</h2>
+      <ol id="top-blazes" style="text-align:left; color:#ffd700; margin:0; padding-left:24px; font-size:1.07em;"></ol>
+    </div>
+    <!-- COMPAT ZIGZIG À 2 -->
+    <div class="street-bloc">
+      <h2>❤️ Compatibilité Zigzig</h2>
+      <input type="text" id="compat1" placeholder="Blaze 1" style="width:110px;">
+      <input type="text" id="compat2" placeholder="Blaze 2" style="width:110px;">
+      <button onclick="checkCompat()" style="font-size:0.97em; margin-left:9px;">Tester !</button>
+      <div id="compat-result" style="margin-top:9px;min-height:22px;"></div>
+    </div>
+    <!-- PRENOM GITAN -->
+    <div class="street-bloc">
+      <h2>🔥 Génère ton blaze de gitan</h2>
+      <button onclick="getGitan()" style="font-size:0.97em;">Donne-moi un blaze gitan</button>
+      <div id="gitan-result" style="margin-top:9px;min-height:20px; color:#2ecc40; font-size:1.15em;"></div>
+    </div>
+    <!-- ZIGZIG SOLO -->
     <div class="zig-container" id="zigblock" style="display:none;">
       <div id="zigscore"></div>
       <div id="zigphrase"></div>
@@ -191,18 +223,16 @@
     <br>
     Projet signé <b>s00r1</b> – 2024
   </div>
-
-  <!-- Modal choix genre pour prénom mixte -->
-  <div id="genre-modal">
-    <div class="box">
+  <!-- MODAL GENRE -->
+  <div id="genre-modal" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#0009;display:flex;justify-content:center;align-items:center;z-index:1111;display:none;">
+    <div class="box" style="background:#222;padding:22px 14px 13px 14px;border-radius:15px;min-width:190px;max-width:95vw;color:#ffd700;font-size:1.09em;text-align:center;">
       <div id="genre-modal-text">Ce prénom est mixte, choisis ton genre :</div>
       <button onclick="setGenreZig('M')">Homme</button>
       <button onclick="setGenreZig('F')">Femme</button>
     </div>
   </div>
-
   <script>
-    // Pour prénoms chelous
+    // ----------------- Tous les JS réunis ----------------------
     const fakeAvatarSeeds = [
       "clown", "alien", "404", "dinomk", "meme", "skull", "robot", "banana", "spaceinvader", "unicorn", "zebi",
       "chicken", "pigeon", "rat", "ninja", "dj", "wizard", "ghost", "cowboy", "pirate", "vampire", "baba", "drill",
@@ -216,14 +246,10 @@
       "fun-emoji", "bottts", "pixel-art", "rings", "adventurer", "micah", "shapes", "croodles", "miniavs",
       "notionists", "personas", "thumbs", "big-ears", "adventurer-neutral"
     ];
-
     let currentPrenom = "";
     let currentGenre = "M";
-
-    function randomFromArray(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
-
+    // Blaze
+    function randomFromArray(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
     function getAvatarStyle(prix) {
       if (prix >= 195) return randomFromArray(["rings", "big-ears", "adventurer-neutral"]);
       if (prix >= 185) return randomFromArray(["rings", "adventurer", "micah"]);
@@ -244,7 +270,6 @@
       if (prix >= 30)  return randomFromArray(["bottts", "personas", "pixel-art"]);
       return randomFromArray(["bottts", "pixel-art"]);
     }
-
     function getVerdict(prix, found) {
       if (!found) {
         const variants = [
@@ -253,67 +278,24 @@
           "💀 C'est pas un prénom, c'est un bug de la matrice !",
           "👽 Blaze de l'espace, jamais vu sur Terre !",
           "😅 Inconnu au bataillon, frère.",
-          "🛑 Inventeur de prénoms, t'es un vrai hacker !",
-          "🤡 Zarma tu t'appelles comme ça ?",
-          "🐸 Même la daronne veut pas croire à ce blaze.",
-          "🔥 T'as gagné, prénom le plus éclaté de France !",
-          "🥒 Même la police le trouve chelou ton blaze.",
-          "💩 Aucun daron a osé ce prénom, t'es pionnier.",
-          "🐔 C'est pas un blaze, c'est un pseudo Snap !",
-          "📛 C'est interdit par l'État Civil, wallah !",
-          "🍌 T'as tapé un fruit, un animal ou quoi ?",
-          "👹 Même l'IA refuse de croire à ce blaze.",
-          "🦄 C'est unique... mais vraiment trop unique.",
-          "⚠️ C'est pas validé, frère, trouve mieux !",
-          "🥷 Ce blaze existe que dans GTA Online.",
-          "🚷 Désolé, prénom refusé par la street.",
-          "🪓 Ça passe pas, même avec un backchich !",
-          "📵 Blacklisté des livres de prénoms.",
-          "🥸 Un jour il sera à la mode, mais pas aujourd’hui !"
+          "🛑 Inventeur de prénoms, t'es un vrai hacker !"
         ];
         return randomFromArray(variants);
       }
-      // (garde les verdicts de prix ici)
       if (prix >= 195) return "👑 Blaze DIVIN, tu peux réclamer le trône d'Alep !";
       if (prix >= 190) return "🦄 Légende urbaine, même ta daronne te respecte !";
-      if (prix >= 185) return "🚀 Collector officiel, même l’INSEE te jalouse !";
       if (prix >= 180) return "🔥 Blaze rare, les anges le murmurent la nuit.";
-      if (prix >= 175) return "🧙 Ancien blaze mystique, tu fais trembler les archives.";
       if (prix >= 170) return "🥷 Ninja du prénom, on te trouve nulle part !";
-      if (prix >= 165) return "🦸 Héros secret, ton prénom c’est une relique.";
-      if (prix >= 160) return "🎩 Blaze soyeux, digne des best-dressers !";
-      if (prix >= 155) return "🎯 Prénom caviar, réservé à l’élite.";
       if (prix >= 150) return "🔮 Mystère et prestige autour de ton blaze.";
-      if (prix >= 145) return "💸 Blaze premium, t’es coté en bourse !";
-      if (prix >= 140) return "🤑 Millionnaire du prénom, la daronne pleure de fierté.";
-      if (prix >= 135) return "🏅 Médaille d'or des prénoms stylés !";
-      if (prix >= 130) return "🥇 Blaze VIP, tapis rouge pour toi.";
-      if (prix >= 125) return "🎤 Rap game validé, blaze de superstar !";
       if (prix >= 120) return "💎 Blaze stylé, respect !";
-      if (prix >= 115) return "🌶️ Blaze épicé, tu fais parler les jaloux.";
-      if (prix >= 110) return "🎉 Blaze qui met tout le monde d’accord !";
-      if (prix >= 105) return "🎶 Blaze musical, ça sonne bien !";
       if (prix >= 100) return "🎤 Blaze de la street, tu passes crème dans tous les quartiers !";
-      if (prix >= 95) return "🔊 Blaze qui ambiance les soirées !";
-      if (prix >= 90) return "👔 Blaze propre, t'es classe à chaque fois.";
-      if (prix >= 85) return "😎 Blaze posé, tu inspires la confiance.";
       if (prix >= 80) return "🦾 Blaze technique, tu dérapes jamais.";
-      if (prix >= 75) return "🍟 Blaze fastfood, tout le monde connaît.";
-      if (prix >= 70) return "📚 Blaze littéraire, tu fais sérieux sans faire ringard.";
-      if (prix >= 65) return "😏 Blaze classique, valeur sûre !";
       if (prix >= 60) return "🤖 Blaze correct, personne te juge !";
-      if (prix >= 55) return "📦 Blaze carton, mais il fait le taf.";
-      if (prix >= 50) return "🧊 Blaze neutre, tu passes partout !";
-      if (prix >= 45) return "📚 Blaze de prof, sérieux et appliqué.";
       if (prix >= 40) return "🎲 Blaze du peuple, partagé avec les cousins.";
-      if (prix >= 35) return "🧔 Blaze de daron, t’es posé tranquille.";
-      if (prix >= 30) return "🏠 Blaze lambda, tu passes inaperçu (mais c'est bien).";
       if (prix >= 20) return "🍞 Blaze de la boulangerie, y’en a dans toutes les familles.";
-      if (prix >= 15) return "🪙 Blaze d’économie, la vie est chère frère.";
       if (prix >= 10) return "🛒 Blaze du supermarché, pratique et fonctionnel.";
       return "🦾 Blaze de robot, personne t’appelle mais tu fais le taf !";
     }
-
     function calculePrix() {
       var prenom = document.getElementById('prenom').value.trim();
       var avatar = document.getElementById('avatar');
@@ -325,6 +307,14 @@
         avatar.style.display = "none";
         verdict.innerHTML = '';
         document.getElementById('zigblock').style.display = "none";
+        document.getElementById('badge-respect').style.display = "none";
+        document.getElementById('jauge-original').style.display = "none";
+        document.getElementById('buzzblock').style.display = "none";
+        document.getElementById('surnomblock').style.display = "none";
+        document.getElementById('clanblock').style.display = "none";
+        document.getElementById('citationblock').style.display = "none";
+        document.getElementById('horoscopeblock').style.display = "none";
+        document.getElementById('badge-credblock').style.display = "none";
         return;
       }
       fetch('/api/prix-prenom?prenom=' + encodeURIComponent(prenom))
@@ -337,12 +327,18 @@
             document.getElementById('prix').innerHTML = "❌ Prénom inconnu au bataillon !";
             document.getElementById('pop').innerHTML = '';
             document.getElementById('details').innerHTML = '';
-            let fakeSeed = randomFromArray(fakeAvatarSeeds);
-            let fakeStyle = randomFromArray(fakeStyles);
-            avatar.src = "https://api.dicebear.com/7.x/" + fakeStyle + "/svg?seed=" + fakeSeed + "&r=" + Math.random();
+            avatar.src = "https://api.dicebear.com/7.x/" + randomFromArray(fakeStyles) + "/svg?seed=" + randomFromArray(fakeAvatarSeeds) + "&r=" + Math.random();
             avatar.style.display = "inline-block";
             verdict.innerHTML = getVerdict(d.prix, false);
             document.getElementById('zigblock').style.display = "none";
+            document.getElementById('badge-respect').style.display = "none";
+            document.getElementById('jauge-original').style.display = "none";
+            document.getElementById('buzzblock').style.display = "none";
+            document.getElementById('surnomblock').style.display = "none";
+            document.getElementById('clanblock').style.display = "none";
+            document.getElementById('citationblock').style.display = "none";
+            document.getElementById('horoscopeblock').style.display = "none";
+            document.getElementById('badge-credblock').style.display = "none";
             return;
           }
           // Blaze connu
@@ -363,17 +359,24 @@
           avatar.src = "https://api.dicebear.com/7.x/" + style + "/svg?seed=" + encodeURIComponent(prenom) + "&r=" + Math.random();
           avatar.style.display = "inline-block";
           verdict.innerHTML = getVerdict(d.prix, true);
-          // Gère le ZIGZIG
-          document.getElementById('zigscore').innerHTML = '';
-          document.getElementById('zigphrase').innerHTML = '';
-          document.getElementById('zigavatar').style.display = "none";
-          document.getElementById('zigblock').style.display = "none";
-          if (d.genre === "X") {
-            // Prénom mixte, on demande le genre
-            showGenreModal();
-          } else {
-            fetchZigzig(d.genre);
-          }
+          document.getElementById('badge-respect').innerHTML = "Respect : " + d.respect + " / 100";
+          document.getElementById('badge-respect').style.display = "inline-block";
+          document.getElementById('jauge-original').style.display = "block";
+          document.getElementById('jauge-bar-original').style.width = d.original + "%";
+          document.getElementById('jauge-bar-original').style.background = "linear-gradient(90deg,#ffd700 "+Math.max(20,d.original)+"%,#2ecc40 100%)";
+          document.getElementById('buzzblock').style.display = "block";
+          document.getElementById('n-tests').innerText = d.n_tests;
+          document.getElementById('surnomblock').style.display = "block";
+          document.getElementById('surnomblock').innerHTML = "Surnom street : <b>" + d.surnom + "</b>";
+          document.getElementById('clanblock').style.display = "block";
+          document.getElementById('clanblock').innerHTML = "Clan / Famille : <b>" + d.clan + "</b>";
+          document.getElementById('citationblock').style.display = "block";
+          document.getElementById('citationblock').innerHTML = "💬 " + d.citation;
+          document.getElementById('horoscopeblock').style.display = "block";
+          document.getElementById('horoscopeblock').innerHTML = "🔮 Horoscope : " + d.horoscope;
+          document.getElementById('badge-credblock').style.display = "block";
+          document.getElementById('badge-credblock').innerHTML = d.cred_txt;
+        if (d.genre === "X") { showGenreModal(); } else { fetchZigzig(d.genre); }
         })
         .catch(() => {
           document.getElementById('prix').innerHTML = "Erreur serveur, la honte !";
@@ -382,9 +385,16 @@
           avatar.style.display = "none";
           verdict.innerHTML = '';
           document.getElementById('zigblock').style.display = "none";
+          document.getElementById('badge-respect').style.display = "none";
+          document.getElementById('jauge-original').style.display = "none";
+          document.getElementById('buzzblock').style.display = "none";
+          document.getElementById('surnomblock').style.display = "none";
+          document.getElementById('clanblock').style.display = "none";
+          document.getElementById('citationblock').style.display = "none";
+          document.getElementById('horoscopeblock').style.display = "none";
+          document.getElementById('badge-credblock').style.display = "none";
         });
     }
-
     function fetchZigzig(genre) {
       fetch('/api/zigzig?prenom=' + encodeURIComponent(currentPrenom) + "&genre=" + genre)
         .then(r => r.json())
@@ -396,13 +406,109 @@
           document.getElementById('zigblock').style.display = "block";
         });
     }
-
-    function showGenreModal() {
-      document.getElementById('genre-modal').style.display = "flex";
-    }
+    function showGenreModal() { document.getElementById('genre-modal').style.display = "flex"; }
     function setGenreZig(genre) {
       document.getElementById('genre-modal').style.display = "none";
       fetchZigzig(genre);
+    }
+    // Leaderboard
+    function chargeLeaderboard() {
+      fetch('/api/leaderboard')
+        .then(r => r.json())
+        .then(data => {
+          let html = '';
+          for (let i=0; i<data.length; i++) {
+            html += `<li><b>${data[i].prenom.charAt(0).toUpperCase() + data[i].prenom.slice(1)}</b> <span style='color:#fff;'>(${data[i].tests} tests)</span></li>`;
+          }
+          document.getElementById('top-blazes').innerHTML = html;
+        });
+    }
+    chargeLeaderboard();
+    // Quiz
+    let quizPrix = 0, quizPrenom = "", quizScore = 0, quizTentatives = 0;
+    function nouveauQuiz() {
+      fetch('/api/quiz')
+        .then(r => r.json())
+        .then(d => {
+          quizPrenom = d.prenom;
+          quizPrix = d.prix;
+          document.getElementById('quiz-question').innerHTML = `À ton avis, combien vaut le prénom <b>${quizPrenom}</b> ?`;
+          document.getElementById('quiz-reponse').value = '';
+          document.getElementById('quiz-resultat').innerText = '';
+        });
+    }
+    function valideQuiz() {
+      const val = Number(document.getElementById('quiz-reponse').value);
+      quizTentatives++;
+      let diff = Math.abs(val - quizPrix);
+      let txt;
+      if (diff < 5) {
+        quizScore++;
+        txt = `🔥 Incroyable ! C’était ${quizPrix} €. Bien vu !`;
+      } else if (diff < 15) {
+        quizScore += 0.5;
+        txt = `👍 Pas mal, c’était ${quizPrix} €.`;
+      } else {
+        txt = `🙃 Raté, c’était ${quizPrix} €.`;
+      }
+      document.getElementById('quiz-resultat').innerText = txt;
+      document.getElementById('quiz-score').innerText = `Score : ${quizScore} / ${quizTentatives}`;
+      setTimeout(nouveauQuiz, 2000);
+    }
+    nouveauQuiz();
+    // Compatibilité
+    function checkCompat() {
+      let p1 = document.getElementById('compat1').value.trim();
+      let p2 = document.getElementById('compat2').value.trim();
+      if (!p1 || !p2) {
+        document.getElementById('compat-result').innerText = "Tape deux blazes !";
+        return;
+      }
+      fetch('/api/compatibilite?prenom1='+encodeURIComponent(p1)+'&prenom2='+encodeURIComponent(p2))
+        .then(r=>r.json()).then(d=>{
+          document.getElementById('compat-result').innerText = d.msg;
+        });
+    }
+    // Blaze gitan
+    function getGitan() {
+      fetch('/api/gitan')
+        .then(r=>r.json())
+        .then(d=>{
+          document.getElementById('gitan-result').innerText = d.prenom;
+        });
+    }
+    // Insulte street
+    function getInsulte() {
+      let p = document.getElementById('prenom').value.trim();
+      if (!p) { document.getElementById('insulte-result').innerText = "Tape un blaze d'abord !"; return;}
+      fetch('/api/insulte?prenom='+encodeURIComponent(p))
+        .then(r=>r.json())
+        .then(d=>{
+          document.getElementById('insulte-result').innerText = d.insulte;
+        });
+    }
+    // Partage réseaux
+    function shareW() {
+      let p = document.getElementById('prenom').value.trim();
+      let prix = document.getElementById('prix').innerText;
+      let txt = encodeURIComponent("Mon blaze " + p + " vaut "+ prix + " sur le site des vrais : " + window.location.href);
+      window.open("https://wa.me/?text=" + txt, "_blank");
+    }
+    function shareT() {
+      let p = document.getElementById('prenom').value.trim();
+      let prix = document.getElementById('prix').innerText;
+      let txt = encodeURIComponent("Mon blaze " + p + " vaut "+ prix + "€ sur le site des vrais !");
+      window.open("https://twitter.com/intent/tweet?text=" + txt + "&url=" + encodeURIComponent(window.location.href), "_blank");
+    }
+    // Son marrant
+    function playSon() {
+      fetch('/api/son')
+        .then(r=>r.json())
+        .then(d=>{
+          let audio = document.getElementById('audio-son');
+          audio.src = d.url;
+          audio.play();
+        });
     }
   </script>
 </body>
