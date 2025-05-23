@@ -7,6 +7,7 @@ import random
 app = Flask(__name__)
 
 CSV_PATH = os.path.join(os.path.dirname(__file__), "prenom.csv")
+COMPTEUR_PATH = os.path.join(os.path.dirname(__file__), "compteur.txt")
 
 prenoms = {}
 
@@ -40,9 +41,23 @@ def compter_lettres_rares(prenom):
     rares = set("wqzxkyjhç")
     return sum(1 for c in prenom if c in rares)
 
+def lire_compteur():
+    try:
+        with open(COMPTEUR_PATH, "r") as f:
+            return int(f.read())
+    except:
+        return 0
+
+def incrementer_compteur():
+    compteur = lire_compteur() + 1
+    with open(COMPTEUR_PATH, "w") as f:
+        f.write(str(compteur))
+    return compteur
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    compteur = incrementer_compteur()
+    return render_template('index.html', compteur=compteur)
 
 @app.route('/api/prix-prenom')
 def prix_prenom():
