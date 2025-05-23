@@ -73,8 +73,32 @@
     .result { margin-top: 25px; font-size: 2.2em; font-weight: bold; min-height: 44px;}
     .pop { margin-top: 10px; font-size: 1.07em; color: #b2b2b2; min-height: 20px;}
     #details { margin-top: 7px; font-size: 1em; color: #b2ffb2; min-height: 20px;}
-    #avatar { margin-top: 30px; border-radius: 50%; border: 3px solid #2ecc40; width: 115px; min-height: 115px; background: #1b1b1b;}
+    #avatar, #zigavatar { margin-top: 30px; border-radius: 50%; border: 3px solid #2ecc40; width: 115px; min-height: 115px; background: #1b1b1b;}
     #verdict { margin-top: 17px; font-size: 1.2em; font-weight: bold; min-height: 28px;}
+    .zig-container {
+      margin-top: 34px;
+      padding: 18px 12px 6px 12px;
+      background: #21212a;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #0005;
+      width: 94%;
+      max-width: 370px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    #zigscore {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #ffd700;
+      margin-bottom: 7px;
+    }
+    #zigphrase {
+      font-size: 1.08em;
+      min-height: 28px;
+      margin-bottom: 9px;
+    }
     .footer {
       margin-top: auto;
       padding: 18px 0 8px 0;
@@ -87,16 +111,56 @@
     }
     .footer a { color: #2ecc40; text-decoration: underline; }
     .compteur { color:#ffd700; margin-bottom:2px; font-size:1.05em;}
+    /* Modal genre */
+    #genre-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #0009;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1111;
+      display: none;
+    }
+    #genre-modal .box {
+      background: #222;
+      padding: 26px 16px 16px 16px;
+      border-radius: 17px;
+      min-width: 240px;
+      max-width: 95vw;
+      color: #ffd700;
+      font-size: 1.12em;
+      box-shadow: 0 2px 20px #0007;
+      text-align: center;
+      position: relative;
+    }
+    #genre-modal button {
+      margin: 17px 7px 0 7px;
+      font-size: 1.09em;
+      padding: 12px 18px;
+      border-radius: 8px;
+      background: #2ecc40;
+      color: #181818;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.14s;
+    }
+    #genre-modal button:hover {
+      background: #ffd700;
+      color: #181818;
+    }
     @media (max-width: 600px) {
       .container { max-width: 100vw; padding: 10px 0 0 0; }
       h1 { font-size: 1.2em; margin: 7px 0 13px 0;}
       input, button { font-size: 1em; padding: 11px;}
-      #avatar { width: 90px; min-height: 90px; margin-top: 20px;}
+      #avatar, #zigavatar { width: 90px; min-height: 90px; margin-top: 16px;}
       .result { font-size: 1.3em;}
       #details { font-size: 0.95em;}
       #verdict { font-size: 1em; min-height: 22px;}
       .footer { font-size: 0.91em; }
       .compteur { font-size: 0.96em; }
+      .zig-container { font-size: 0.97em; padding: 13px 4px 4px 4px;}
     }
     ::selection { background: #ffd70066; }
   </style>
@@ -111,6 +175,11 @@
     <div id="details"></div>
     <img id="avatar" style="display:none;">
     <div id="verdict"></div>
+    <div class="zig-container" id="zigblock" style="display:none;">
+      <div id="zigscore"></div>
+      <div id="zigphrase"></div>
+      <img id="zigavatar" style="display:none;">
+    </div>
   </div>
   <div class="compteur">
     👁 Nombre de visites : <b>{{ compteur }}</b>
@@ -122,8 +191,18 @@
     <br>
     Projet signé <b>s00r1</b> – 2024
   </div>
+
+  <!-- Modal choix genre pour prénom mixte -->
+  <div id="genre-modal">
+    <div class="box">
+      <div id="genre-modal-text">Ce prénom est mixte, choisis ton genre :</div>
+      <button onclick="setGenreZig('M')">Homme</button>
+      <button onclick="setGenreZig('F')">Femme</button>
+    </div>
+  </div>
+
   <script>
-    // Massif fake pour faux prénoms
+    // Pour prénoms chelous
     const fakeAvatarSeeds = [
       "clown", "alien", "404", "dinomk", "meme", "skull", "robot", "banana", "spaceinvader", "unicorn", "zebi",
       "chicken", "pigeon", "rat", "ninja", "dj", "wizard", "ghost", "cowboy", "pirate", "vampire", "baba", "drill",
@@ -137,6 +216,9 @@
       "fun-emoji", "bottts", "pixel-art", "rings", "adventurer", "micah", "shapes", "croodles", "miniavs",
       "notionists", "personas", "thumbs", "big-ears", "adventurer-neutral"
     ];
+
+    let currentPrenom = "";
+    let currentGenre = "M";
 
     function randomFromArray(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
@@ -191,6 +273,7 @@
         ];
         return randomFromArray(variants);
       }
+      // (garde les verdicts de prix ici)
       if (prix >= 195) return "👑 Blaze DIVIN, tu peux réclamer le trône d'Alep !";
       if (prix >= 190) return "🦄 Légende urbaine, même ta daronne te respecte !";
       if (prix >= 185) return "🚀 Collector officiel, même l’INSEE te jalouse !";
@@ -241,12 +324,15 @@
         document.getElementById('details').innerHTML = '';
         avatar.style.display = "none";
         verdict.innerHTML = '';
+        document.getElementById('zigblock').style.display = "none";
         return;
       }
       fetch('/api/prix-prenom?prenom=' + encodeURIComponent(prenom))
         .then(r => r.json())
         .then(d => {
-          // Si le prénom n’existe pas (popularite=0) => avatar méga random + message
+          currentPrenom = prenom;
+          currentGenre = d.genre;
+          // Prénom non trouvé
           if (d.popularite === 0) {
             document.getElementById('prix').innerHTML = "❌ Prénom inconnu au bataillon !";
             document.getElementById('pop').innerHTML = '';
@@ -256,9 +342,10 @@
             avatar.src = "https://api.dicebear.com/7.x/" + fakeStyle + "/svg?seed=" + fakeSeed + "&r=" + Math.random();
             avatar.style.display = "inline-block";
             verdict.innerHTML = getVerdict(d.prix, false);
+            document.getElementById('zigblock').style.display = "none";
             return;
           }
-          // Cas normal, prénom dans la base
+          // Blaze connu
           document.getElementById('prix').innerHTML =
             "Prix du blaze : <span style='color:#ffd700'>" + d.prix + " €</span>";
           document.getElementById('pop').innerHTML =
@@ -276,6 +363,17 @@
           avatar.src = "https://api.dicebear.com/7.x/" + style + "/svg?seed=" + encodeURIComponent(prenom) + "&r=" + Math.random();
           avatar.style.display = "inline-block";
           verdict.innerHTML = getVerdict(d.prix, true);
+          // Gère le ZIGZIG
+          document.getElementById('zigscore').innerHTML = '';
+          document.getElementById('zigphrase').innerHTML = '';
+          document.getElementById('zigavatar').style.display = "none";
+          document.getElementById('zigblock').style.display = "none";
+          if (d.genre === "X") {
+            // Prénom mixte, on demande le genre
+            showGenreModal();
+          } else {
+            fetchZigzig(d.genre);
+          }
         })
         .catch(() => {
           document.getElementById('prix').innerHTML = "Erreur serveur, la honte !";
@@ -283,7 +381,28 @@
           document.getElementById('details').innerHTML = "";
           avatar.style.display = "none";
           verdict.innerHTML = '';
+          document.getElementById('zigblock').style.display = "none";
         });
+    }
+
+    function fetchZigzig(genre) {
+      fetch('/api/zigzig?prenom=' + encodeURIComponent(currentPrenom) + "&genre=" + genre)
+        .then(r => r.json())
+        .then(d => {
+          document.getElementById('zigscore').innerHTML = "Taux de zigzig : <b style='color:#2ecc40'>" + d.score + " / 20</b>";
+          document.getElementById('zigphrase').innerHTML = d.phrase;
+          document.getElementById('zigavatar').src = d.avatar + "&r=" + Math.random();
+          document.getElementById('zigavatar').style.display = "inline-block";
+          document.getElementById('zigblock').style.display = "block";
+        });
+    }
+
+    function showGenreModal() {
+      document.getElementById('genre-modal').style.display = "flex";
+    }
+    function setGenreZig(genre) {
+      document.getElementById('genre-modal').style.display = "none";
+      fetchZigzig(genre);
     }
   </script>
 </body>
