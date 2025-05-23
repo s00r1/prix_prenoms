@@ -20,7 +20,7 @@
   </style>
 </head>
 <body>
-  <h1>💸 Valeur de ton prénom 💸</h1>
+  <h1>💸 Valeur de ton blaze 💸</h1>
   <input type="text" id="prenom" placeholder="Tape ton prénom...">
   <button onclick="calculePrix()">Calcule !</button>
   <div class="result" id="prix"></div>
@@ -36,18 +36,112 @@
     Projet signé <b>s00r1</b> – 2024
   </div>
   <script>
-    function getAvatarStyle(prix) {
-      if (prix >= 180) return "rings";         // Super collector
-      if (prix >= 120) return "adventurer";    // Stylé BD
-      if (prix >= 50)  return "fun-emoji";     // Fun
-      return "bottts";                         // lambda/robot
+    // Massive seed et styles list for memes
+    const fakeAvatarSeeds = [
+      "clown", "alien", "404", "dinomk", "meme", "skull", "robot", "banana", "spaceinvader", "unicorn", "zebi",
+      "chicken", "pigeon", "rat", "ninja", "dj", "wizard", "ghost", "cowboy", "pirate", "vampire", "baba", "drill",
+      "dragon", "gremlin", "gangsta", "barbie", "magicien", "singe", "troll", "grinch", "lapin", "crocodile", "babtou", "poulpe",
+      "babar", "babouche", "bouffon", "hamster", "sorcier", "bougnoule", "tchoin", "bouledogue", "chien", "dinosaure", "zidane",
+      "lafrappe", "lesang", "demon", "elProfessor", "lapute", "ken", "chewbacca", "freestyle", "tyson", "kratos", "gollum",
+      "thor", "darkvador", "pikachu", "obama", "elonmusk", "messidona", "ronaldo", "superman", "shrek", "spiderman",
+      "joker", "batman", "bigmac", "napoleon", "hitman", "yoda", "godzilla", "pikachu", "liluzivert"
+    ];
+    const fakeStyles = [
+      "fun-emoji", "bottts", "pixel-art", "rings", "adventurer", "micah", "shapes", "croodles", "miniavs",
+      "notionists", "personas", "thumbs", "big-ears", "adventurer-neutral"
+    ];
+
+    function randomFromArray(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    function getVerdict(prix) {
-      if (prix >= 180) return "🔥 Blaze collector, t’es une légende frère !";
+    function getAvatarStyle(prix) {
+      if (prix >= 195) return randomFromArray(["rings", "big-ears", "adventurer-neutral"]);
+      if (prix >= 185) return randomFromArray(["rings", "adventurer", "micah"]);
+      if (prix >= 175) return randomFromArray(["adventurer-neutral", "rings", "shapes"]);
+      if (prix >= 165) return randomFromArray(["rings", "micah", "big-ears"]);
+      if (prix >= 155) return randomFromArray(["adventurer", "micah", "croodles"]);
+      if (prix >= 145) return randomFromArray(["miniavs", "notionists"]);
+      if (prix >= 135) return randomFromArray(["miniavs", "shapes"]);
+      if (prix >= 125) return randomFromArray(["fun-emoji", "croodles"]);
+      if (prix >= 115) return randomFromArray(["miniavs", "personas"]);
+      if (prix >= 105) return randomFromArray(["fun-emoji", "miniavs"]);
+      if (prix >= 95)  return randomFromArray(["thumbs", "bottts"]);
+      if (prix >= 85)  return randomFromArray(["bottts", "personas"]);
+      if (prix >= 75)  return randomFromArray(["pixel-art", "bottts"]);
+      if (prix >= 65)  return randomFromArray(["personas", "pixel-art"]);
+      if (prix >= 55)  return randomFromArray(["thumbs", "miniavs"]);
+      if (prix >= 45)  return randomFromArray(["bottts", "fun-emoji"]);
+      if (prix >= 30)  return randomFromArray(["bottts", "personas", "pixel-art"]);
+      return randomFromArray(["bottts", "pixel-art"]);
+    }
+
+    function getVerdict(prix, found) {
+      if (!found) {
+        const variants = [
+          "🚫 Ce blaze existe même pas, wallah !",
+          "❌ Prénom mytho détecté !",
+          "💀 C'est pas un prénom, c'est un bug de la matrice !",
+          "👽 Blaze de l'espace, jamais vu sur Terre !",
+          "😅 Inconnu au bataillon, frère.",
+          "🛑 Inventeur de prénoms, t'es un vrai hacker !",
+          "🤡 Zarma tu t'appelles comme ça ?",
+          "🐸 Même la daronne veut pas croire à ce blaze.",
+          "🔥 T'as gagné, prénom le plus éclaté de France !",
+          "🥒 Même la police le trouve chelou ton blaze.",
+          "💩 Aucun daron a osé ce prénom, t'es pionnier.",
+          "🐔 C'est pas un blaze, c'est un pseudo Snap !",
+          "📛 C'est interdit par l'État Civil, wallah !",
+          "🍌 T'as tapé un fruit, un animal ou quoi ?",
+          "👹 Même l'IA refuse de croire à ce blaze.",
+          "🦄 C'est unique... mais vraiment trop unique.",
+          "⚠️ C'est pas validé, frère, trouve mieux !",
+          "🥷 Ce blaze existe que dans GTA Online.",
+          "🚷 Désolé, prénom refusé par la street.",
+          "🪓 Ça passe pas, même avec un backchich !",
+          "📵 Blacklisté des livres de prénoms.",
+          "🥸 Un jour il sera à la mode, mais pas aujourd’hui !"
+        ];
+        return randomFromArray(variants);
+      }
+      if (prix >= 195) return "👑 Blaze DIVIN, tu peux réclamer le trône d'Alep !";
+      if (prix >= 190) return "🦄 Légende urbaine, même ta daronne te respecte !";
+      if (prix >= 185) return "🚀 Collector officiel, même l’INSEE te jalouse !";
+      if (prix >= 180) return "🔥 Blaze rare, les anges le murmurent la nuit.";
+      if (prix >= 175) return "🧙 Ancien blaze mystique, tu fais trembler les archives.";
+      if (prix >= 170) return "🥷 Ninja du prénom, on te trouve nulle part !";
+      if (prix >= 165) return "🦸 Héros secret, ton prénom c’est une relique.";
+      if (prix >= 160) return "🎩 Blaze soyeux, digne des best-dressers !";
+      if (prix >= 155) return "🎯 Prénom caviar, réservé à l’élite.";
+      if (prix >= 150) return "🔮 Mystère et prestige autour de ton blaze.";
+      if (prix >= 145) return "💸 Blaze premium, t’es coté en bourse !";
+      if (prix >= 140) return "🤑 Millionnaire du prénom, la daronne pleure de fierté.";
+      if (prix >= 135) return "🏅 Médaille d'or des prénoms stylés !";
+      if (prix >= 130) return "🥇 Blaze VIP, tapis rouge pour toi.";
+      if (prix >= 125) return "🎤 Rap game validé, blaze de superstar !";
       if (prix >= 120) return "💎 Blaze stylé, respect !";
-      if (prix >= 50)  return "😏 Blaze classique, ça passe crème.";
-      return "🦾 Blaze de robot, t’es discret mais efficace.";
+      if (prix >= 115) return "🌶️ Blaze épicé, tu fais parler les jaloux.";
+      if (prix >= 110) return "🎉 Blaze qui met tout le monde d’accord !";
+      if (prix >= 105) return "🎶 Blaze musical, ça sonne bien !";
+      if (prix >= 100) return "🎤 Blaze de la street, tu passes crème dans tous les quartiers !";
+      if (prix >= 95) return "🔊 Blaze qui ambiance les soirées !";
+      if (prix >= 90) return "👔 Blaze propre, t'es classe à chaque fois.";
+      if (prix >= 85) return "😎 Blaze posé, tu inspires la confiance.";
+      if (prix >= 80) return "🦾 Blaze technique, tu dérapes jamais.";
+      if (prix >= 75) return "🍟 Blaze fastfood, tout le monde connaît.";
+      if (prix >= 70) return "📚 Blaze littéraire, tu fais sérieux sans faire ringard.";
+      if (prix >= 65) return "😏 Blaze classique, valeur sûre !";
+      if (prix >= 60) return "🤖 Blaze correct, personne te juge !";
+      if (prix >= 55) return "📦 Blaze carton, mais il fait le taf.";
+      if (prix >= 50) return "🧊 Blaze neutre, tu passes partout !";
+      if (prix >= 45) return "📚 Blaze de prof, sérieux et appliqué.";
+      if (prix >= 40) return "🎲 Blaze du peuple, partagé avec les cousins.";
+      if (prix >= 35) return "🧔 Blaze de daron, t’es posé tranquille.";
+      if (prix >= 30) return "🏠 Blaze lambda, tu passes inaperçu (mais c'est bien).";
+      if (prix >= 20) return "🍞 Blaze de la boulangerie, y’en a dans toutes les familles.";
+      if (prix >= 15) return "🪙 Blaze d’économie, la vie est chère frère.";
+      if (prix >= 10) return "🛒 Blaze du supermarché, pratique et fonctionnel.";
+      return "🦾 Blaze de robot, personne t’appelle mais tu fais le taf !";
     }
 
     function calculePrix() {
@@ -64,17 +158,26 @@
       fetch('/api/prix-prenom?prenom=' + encodeURIComponent(prenom))
         .then(r => r.json())
         .then(d => {
+          // Si le prénom n’existe pas (popularite=0) => avatar méga random + message
+          if (d.popularite === 0) {
+            document.getElementById('prix').innerHTML = "❌ Prénom inconnu au bataillon !";
+            document.getElementById('pop').innerHTML = '';
+            let fakeSeed = randomFromArray(fakeAvatarSeeds);
+            let fakeStyle = randomFromArray(fakeStyles);
+            avatar.src = "https://api.dicebear.com/7.x/" + fakeStyle + "/svg?seed=" + fakeSeed + "&r=" + Math.random();
+            avatar.style.display = "inline-block";
+            verdict.innerHTML = getVerdict(d.prix, false);
+            return;
+          }
+          // Cas normal, prénom dans la base
           document.getElementById('prix').innerHTML =
             "Prix du blaze : <span style='color:#ffd700'>" + d.prix + " €</span>";
           document.getElementById('pop').innerHTML =
-            (d.popularite > 0) ?
-            "(Popularité : " + d.popularite + " personnes depuis 1900)" :
-            "(Ce blaze est tellement rare que t’es une légende frère)";
-          // Génère avatar adapté au prix, et ajoute random pour casser le cache
+            "(Popularité : " + d.popularite + " personnes depuis 1900)";
           let style = getAvatarStyle(d.prix);
           avatar.src = "https://api.dicebear.com/7.x/" + style + "/svg?seed=" + encodeURIComponent(prenom) + "&r=" + Math.random();
           avatar.style.display = "inline-block";
-          verdict.innerHTML = getVerdict(d.prix);
+          verdict.innerHTML = getVerdict(d.prix, true);
         })
         .catch(() => {
           document.getElementById('prix').innerHTML = "Erreur serveur, la honte !";
