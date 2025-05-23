@@ -72,6 +72,7 @@
     button:active { background: #ffd700; color: #111;}
     .result { margin-top: 25px; font-size: 2.2em; font-weight: bold; min-height: 44px;}
     .pop { margin-top: 10px; font-size: 1.07em; color: #b2b2b2; min-height: 20px;}
+    #details { margin-top: 7px; font-size: 1em; color: #b2ffb2; min-height: 20px;}
     #avatar { margin-top: 30px; border-radius: 50%; border: 3px solid #2ecc40; width: 115px; min-height: 115px; background: #1b1b1b;}
     #verdict { margin-top: 17px; font-size: 1.2em; font-weight: bold; min-height: 28px;}
     .footer {
@@ -91,6 +92,7 @@
       input, button { font-size: 1em; padding: 11px;}
       #avatar { width: 90px; min-height: 90px; margin-top: 20px;}
       .result { font-size: 1.3em;}
+      #details { font-size: 0.95em;}
       #verdict { font-size: 1em; min-height: 22px;}
       .footer { font-size: 0.91em; }
     }
@@ -104,6 +106,7 @@
     <button onclick="calculePrix()">Calcule !</button>
     <div class="result" id="prix"></div>
     <div class="pop" id="pop"></div>
+    <div id="details"></div>
     <img id="avatar" style="display:none;">
     <div id="verdict"></div>
   </div>
@@ -115,7 +118,7 @@
     Projet signé <b>s00r1</b> – 2024
   </div>
   <script>
-    // Massivement enrichi pour la street
+    // Massif fake pour faux prénoms
     const fakeAvatarSeeds = [
       "clown", "alien", "404", "dinomk", "meme", "skull", "robot", "banana", "spaceinvader", "unicorn", "zebi",
       "chicken", "pigeon", "rat", "ninja", "dj", "wizard", "ghost", "cowboy", "pirate", "vampire", "baba", "drill",
@@ -230,6 +233,7 @@
       if (prenom === '') {
         document.getElementById('prix').innerHTML = "Wallah, tape un prénom din'omk !";
         document.getElementById('pop').innerHTML = '';
+        document.getElementById('details').innerHTML = '';
         avatar.style.display = "none";
         verdict.innerHTML = '';
         return;
@@ -241,6 +245,7 @@
           if (d.popularite === 0) {
             document.getElementById('prix').innerHTML = "❌ Prénom inconnu au bataillon !";
             document.getElementById('pop').innerHTML = '';
+            document.getElementById('details').innerHTML = '';
             let fakeSeed = randomFromArray(fakeAvatarSeeds);
             let fakeStyle = randomFromArray(fakeStyles);
             avatar.src = "https://api.dicebear.com/7.x/" + fakeStyle + "/svg?seed=" + fakeSeed + "&r=" + Math.random();
@@ -253,6 +258,13 @@
             "Prix du blaze : <span style='color:#ffd700'>" + d.prix + " €</span>";
           document.getElementById('pop').innerHTML =
             "(Popularité : " + d.popularite + " personnes depuis 1900)";
+          document.getElementById('details').innerHTML =
+            "<span style='font-size: 0.97em; color:#b2ffb2'>" +
+            "📝 Détails : " +
+            d.lettres + " lettres, " +
+            d.voyelles + " voyelles, " +
+            d.consonnes + " consonnes" +
+            "</span>";
           let style = getAvatarStyle(d.prix);
           avatar.src = "https://api.dicebear.com/7.x/" + style + "/svg?seed=" + encodeURIComponent(prenom) + "&r=" + Math.random();
           avatar.style.display = "inline-block";
@@ -261,6 +273,7 @@
         .catch(() => {
           document.getElementById('prix').innerHTML = "Erreur serveur, la honte !";
           document.getElementById('pop').innerHTML = "";
+          document.getElementById('details').innerHTML = "";
           avatar.style.display = "none";
           verdict.innerHTML = '';
         });
