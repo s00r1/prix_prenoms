@@ -77,32 +77,32 @@ def prix_prenom():
         logmax = math.log(FREQ_MAX + 1)
         base = valeur_max * (1 - (logfreq / logmax))
 
-        # PALIERS BOOST
+        # BOOSTS ENORMES pour blazes pas chers, plus doux au-dessus
         if base < 50:
-            bonus_court = max(0, 7 - n_lettres) * 7
-            bonus_voyelles = n_voyelles * 3
-            malus_consonnes = n_consonnes * -4
-            boost_rare = n_rares * 20
+            bonus_court = max(0, 7 - n_lettres) * 18
+            bonus_voyelles = n_voyelles * 10
+            malus_consonnes = n_consonnes * -6
+            boost_rare = n_rares * 24
         elif base < 100:
-            bonus_court = max(0, 7 - n_lettres) * 2.2
-            bonus_voyelles = n_voyelles * 1.2
+            bonus_court = max(0, 7 - n_lettres) * 5
+            bonus_voyelles = n_voyelles * 2.5
             malus_consonnes = n_consonnes * -1.5
-            boost_rare = n_rares * 7
+            boost_rare = n_rares * 8
         elif base < 150:
-            bonus_court = max(0, 7 - n_lettres) * 1
-            bonus_voyelles = n_voyelles * 0.6
-            malus_consonnes = n_consonnes * -0.8
-            boost_rare = n_rares * 2.2
+            bonus_court = max(0, 7 - n_lettres) * 2
+            bonus_voyelles = n_voyelles * 1
+            malus_consonnes = n_consonnes * -0.5
+            boost_rare = n_rares * 2.5
         else:
-            bonus_court = max(0, 7 - n_lettres) * 0.4
-            bonus_voyelles = n_voyelles * 0.2
-            malus_consonnes = n_consonnes * -0.2
-            boost_rare = n_rares * 0.8
+            bonus_court = max(0, 7 - n_lettres) * 0.7
+            bonus_voyelles = n_voyelles * 0.3
+            malus_consonnes = n_consonnes * -0.12
+            boost_rare = n_rares * 1
 
         bonus_tiret = 10 if is_tiret else 0
 
         prix = base + bonus_court + bonus_voyelles + malus_consonnes + boost_rare + bonus_tiret
-        prix += random.uniform(-5, 7)
+        prix += random.uniform(-4, 7)
     prix = min(valeur_max, max(valeur_min, round(prix, 2)))
     return jsonify({
         "prix": prix,
