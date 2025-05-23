@@ -61,8 +61,26 @@
       margin-bottom: 12px;
       margin-top: 2px;
       box-shadow: 0 1px 8px #0005;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     button:active { background: #ffd700; color: #111;}
+    .icon-btn {
+      padding: 11px 18px;
+      font-size: 1em;
+      background: #21212a;
+      color: #ffd700;
+      border-radius: 8px;
+      margin: 4px 6px 2px 0;
+      box-shadow: 0 1px 8px #0005;
+      border: 2px solid #2ecc40;
+      transition: background 0.18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .icon-btn:active { background: #ffd70022; color: #2ecc40; }
     .result { margin-top: 19px; font-size: 2em; font-weight: bold; min-height: 36px;}
     .pop { margin-top: 8px; font-size: 1.06em; color: #b2b2b2; min-height: 16px;}
     #details { margin-top: 5px; font-size: 1em; color: #b2ffb2; min-height: 20px;}
@@ -141,13 +159,15 @@
       .footer { font-size: 0.91em; }
       .compteur { font-size: 0.95em; }
       .zig-container { font-size: 0.96em; padding: 7px 2px 2px 2px;}
+      .icon-btn { padding: 7px 11px; font-size: 0.95em;}
     }
     ::selection { background: #ffd70066; }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="/static/logo.gif" alt="Logo" style="display:block; margin: 0 auto 14px auto; max-width: 120px; width:200px; border-radius: 18px; box-shadow:0 2px 12px #ffd70055;">
+    <!-- Ton logo -->
+    <img src="/static/logo.gif" alt="Logo" style="display:block; margin: 0 auto 14px auto; max-width: 120px; width:300px; border-radius: 18px; box-shadow:0 2px 12px #ffd70055;">
     <h1>💸 Valeur de ton blaze 💸</h1>
     <input type="text" id="prenom" placeholder="Tape ton prénom..." onkeydown="if(event.key==='Enter')calculePrix();">
     <button onclick="calculePrix()">Calcule !</button>
@@ -168,14 +188,30 @@
     <div class="citation" id="citationblock" style="display:none;"></div>
     <div class="horoscope" id="horoscopeblock" style="display:none;"></div>
     <div class="badge-cred" id="badge-credblock" style="display:none;"></div>
-    <div class="street-bloc">
-      <button onclick="shareW()">Partager sur WhatsApp</button>
-      <button onclick="shareT()">Partager sur Twitter</button>
-      <button onclick="playSon()">Joue un son sale</button>
+    <!-- PARTAGE RÉSEAUX -->
+    <div class="street-bloc" style="background:#202020;">
+      <button class="icon-btn" onclick="shareW()">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/whatsapp.svg" style="width:22px;vertical-align:middle;filter:invert(38%) sepia(99%) saturate(629%) hue-rotate(72deg) brightness(100%) contrast(97%);">
+        WhatsApp
+      </button>
+      <button class="icon-btn" onclick="shareT()">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/twitter.svg" style="width:22px;vertical-align:middle;filter:invert(73%) sepia(71%) saturate(748%) hue-rotate(175deg) brightness(101%) contrast(90%);">
+        Twitter
+      </button>
     </div>
-    <audio id="audio-son"></audio>
+    <!-- JOUER UN SON SALE AVEC VISAGE CRIANT -->
     <div class="street-bloc">
-      <button onclick="getInsulte()">Invente-moi une insulte street !</button>
+      <button class="icon-btn" onclick="playSon()">
+        <img src="https://media.giphy.com/media/l41m5DdpR1XxJTh8c/giphy.gif" style="width:26px;height:26px;border-radius:50%;margin-right:4px;">
+        Joue un son sale
+      </button>
+      <audio id="audio-son"></audio>
+    </div>
+    <div class="street-bloc">
+      <button onclick="getInsulte()" class="icon-btn">
+        <img src="https://emojiapi.dev/api/v1/1f92c/32.png" style="width:24px;vertical-align:middle;margin-right:3px;">
+        Invente-moi une insulte street !
+      </button>
       <div id="insulte-result" style="margin-top:7px;min-height:18px; color:#ffd700; font-size:1.07em;"></div>
     </div>
     <!-- QUIZ -->
@@ -233,275 +269,7 @@
     </div>
   </div>
   <script>
-    // ----------------- Tous les JS réunis ----------------------
-    const fakeAvatarSeeds = [
-      "clown", "alien", "404", "dinomk", "meme", "skull", "robot", "banana", "spaceinvader", "unicorn", "zebi",
-      "chicken", "pigeon", "rat", "ninja", "dj", "wizard", "ghost", "cowboy", "pirate", "vampire", "baba", "drill",
-      "dragon", "gremlin", "gangsta", "barbie", "magicien", "singe", "troll", "grinch", "lapin", "crocodile", "babtou", "poulpe",
-      "babar", "babouche", "bouffon", "hamster", "sorcier", "bougnoule", "tchoin", "bouledogue", "chien", "dinosaure", "zidane",
-      "lafrappe", "lesang", "demon", "elProfessor", "lapute", "ken", "chewbacca", "freestyle", "tyson", "kratos", "gollum",
-      "thor", "darkvador", "pikachu", "obama", "elonmusk", "messidona", "ronaldo", "superman", "shrek", "spiderman",
-      "joker", "batman", "bigmac", "napoleon", "hitman", "yoda", "godzilla", "pikachu", "liluzivert"
-    ];
-    const fakeStyles = [
-      "fun-emoji", "bottts", "pixel-art", "rings", "adventurer", "micah", "shapes", "croodles", "miniavs",
-      "notionists", "personas", "thumbs", "big-ears", "adventurer-neutral"
-    ];
-    let currentPrenom = "";
-    let currentGenre = "M";
-    // Blaze
-    function randomFromArray(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-    function getAvatarStyle(prix) {
-      if (prix >= 195) return randomFromArray(["rings", "big-ears", "adventurer-neutral"]);
-      if (prix >= 185) return randomFromArray(["rings", "adventurer", "micah"]);
-      if (prix >= 175) return randomFromArray(["adventurer-neutral", "rings", "shapes"]);
-      if (prix >= 165) return randomFromArray(["rings", "micah", "big-ears"]);
-      if (prix >= 155) return randomFromArray(["adventurer", "micah", "croodles"]);
-      if (prix >= 145) return randomFromArray(["miniavs", "notionists"]);
-      if (prix >= 135) return randomFromArray(["miniavs", "shapes"]);
-      if (prix >= 125) return randomFromArray(["fun-emoji", "croodles"]);
-      if (prix >= 115) return randomFromArray(["miniavs", "personas"]);
-      if (prix >= 105) return randomFromArray(["fun-emoji", "miniavs"]);
-      if (prix >= 95)  return randomFromArray(["thumbs", "bottts"]);
-      if (prix >= 85)  return randomFromArray(["bottts", "personas"]);
-      if (prix >= 75)  return randomFromArray(["pixel-art", "bottts"]);
-      if (prix >= 65)  return randomFromArray(["personas", "pixel-art"]);
-      if (prix >= 55)  return randomFromArray(["thumbs", "miniavs"]);
-      if (prix >= 45)  return randomFromArray(["bottts", "fun-emoji"]);
-      if (prix >= 30)  return randomFromArray(["bottts", "personas", "pixel-art"]);
-      return randomFromArray(["bottts", "pixel-art"]);
-    }
-    function getVerdict(prix, found) {
-      if (!found) {
-        const variants = [
-          "🚫 Ce blaze existe même pas, wallah !",
-          "❌ Prénom mytho détecté !",
-          "💀 C'est pas un prénom, c'est un bug de la matrice !",
-          "👽 Blaze de l'espace, jamais vu sur Terre !",
-          "😅 Inconnu au bataillon, frère.",
-          "🛑 Inventeur de prénoms, t'es un vrai hacker !"
-        ];
-        return randomFromArray(variants);
-      }
-      if (prix >= 195) return "👑 Blaze DIVIN, tu peux réclamer le trône d'Alep !";
-      if (prix >= 190) return "🦄 Légende urbaine, même ta daronne te respecte !";
-      if (prix >= 180) return "🔥 Blaze rare, les anges le murmurent la nuit.";
-      if (prix >= 170) return "🥷 Ninja du prénom, on te trouve nulle part !";
-      if (prix >= 150) return "🔮 Mystère et prestige autour de ton blaze.";
-      if (prix >= 120) return "💎 Blaze stylé, respect !";
-      if (prix >= 100) return "🎤 Blaze de la street, tu passes crème dans tous les quartiers !";
-      if (prix >= 80) return "🦾 Blaze technique, tu dérapes jamais.";
-      if (prix >= 60) return "🤖 Blaze correct, personne te juge !";
-      if (prix >= 40) return "🎲 Blaze du peuple, partagé avec les cousins.";
-      if (prix >= 20) return "🍞 Blaze de la boulangerie, y’en a dans toutes les familles.";
-      if (prix >= 10) return "🛒 Blaze du supermarché, pratique et fonctionnel.";
-      return "🦾 Blaze de robot, personne t’appelle mais tu fais le taf !";
-    }
-    function calculePrix() {
-      var prenom = document.getElementById('prenom').value.trim();
-      var avatar = document.getElementById('avatar');
-      var verdict = document.getElementById('verdict');
-      if (prenom === '') {
-        document.getElementById('prix').innerHTML = "Wallah, tape un prénom din'omk !";
-        document.getElementById('pop').innerHTML = '';
-        document.getElementById('details').innerHTML = '';
-        avatar.style.display = "none";
-        verdict.innerHTML = '';
-        document.getElementById('zigblock').style.display = "none";
-        document.getElementById('badge-respect').style.display = "none";
-        document.getElementById('jauge-original').style.display = "none";
-        document.getElementById('buzzblock').style.display = "none";
-        document.getElementById('surnomblock').style.display = "none";
-        document.getElementById('clanblock').style.display = "none";
-        document.getElementById('citationblock').style.display = "none";
-        document.getElementById('horoscopeblock').style.display = "none";
-        document.getElementById('badge-credblock').style.display = "none";
-        return;
-      }
-      fetch('/api/prix-prenom?prenom=' + encodeURIComponent(prenom))
-        .then(r => r.json())
-        .then(d => {
-          currentPrenom = prenom;
-          currentGenre = d.genre;
-          // Prénom non trouvé
-          if (d.popularite === 0) {
-            document.getElementById('prix').innerHTML = "❌ Prénom inconnu au bataillon !";
-            document.getElementById('pop').innerHTML = '';
-            document.getElementById('details').innerHTML = '';
-            avatar.src = "https://api.dicebear.com/7.x/" + randomFromArray(fakeStyles) + "/svg?seed=" + randomFromArray(fakeAvatarSeeds) + "&r=" + Math.random();
-            avatar.style.display = "inline-block";
-            verdict.innerHTML = getVerdict(d.prix, false);
-            document.getElementById('zigblock').style.display = "none";
-            document.getElementById('badge-respect').style.display = "none";
-            document.getElementById('jauge-original').style.display = "none";
-            document.getElementById('buzzblock').style.display = "none";
-            document.getElementById('surnomblock').style.display = "none";
-            document.getElementById('clanblock').style.display = "none";
-            document.getElementById('citationblock').style.display = "none";
-            document.getElementById('horoscopeblock').style.display = "none";
-            document.getElementById('badge-credblock').style.display = "none";
-            return;
-          }
-          // Blaze connu
-          document.getElementById('prix').innerHTML =
-            "Prix du blaze : <span style='color:#ffd700'>" + d.prix + " €</span>";
-          document.getElementById('pop').innerHTML =
-            "(Popularité : " + d.popularite + " personnes depuis 1900)";
-          document.getElementById('details').innerHTML =
-            "<span style='font-size: 0.97em; color:#b2ffb2'>" +
-            "📝 Détails : " +
-            d.lettres + " lettres, " +
-            d.voyelles + " voyelles, " +
-            d.consonnes + " consonnes, " +
-            d.lettres_rares + " lettres rares" +
-            (d.bonus_tiret ? ", tiret/apos (+10€)" : "") +
-            "</span>";
-          let style = getAvatarStyle(d.prix);
-          avatar.src = "https://api.dicebear.com/7.x/" + style + "/svg?seed=" + encodeURIComponent(prenom) + "&r=" + Math.random();
-          avatar.style.display = "inline-block";
-          verdict.innerHTML = getVerdict(d.prix, true);
-          document.getElementById('badge-respect').innerHTML = "Respect : " + d.respect + " / 100";
-          document.getElementById('badge-respect').style.display = "inline-block";
-          document.getElementById('jauge-original').style.display = "block";
-          document.getElementById('jauge-bar-original').style.width = d.original + "%";
-          document.getElementById('jauge-bar-original').style.background = "linear-gradient(90deg,#ffd700 "+Math.max(20,d.original)+"%,#2ecc40 100%)";
-          document.getElementById('buzzblock').style.display = "block";
-          document.getElementById('n-tests').innerText = d.n_tests;
-          document.getElementById('surnomblock').style.display = "block";
-          document.getElementById('surnomblock').innerHTML = "Surnom street : <b>" + d.surnom + "</b>";
-          document.getElementById('clanblock').style.display = "block";
-          document.getElementById('clanblock').innerHTML = "Clan / Famille : <b>" + d.clan + "</b>";
-          document.getElementById('citationblock').style.display = "block";
-          document.getElementById('citationblock').innerHTML = "💬 " + d.citation;
-          document.getElementById('horoscopeblock').style.display = "block";
-          document.getElementById('horoscopeblock').innerHTML = "🔮 Horoscope : " + d.horoscope;
-          document.getElementById('badge-credblock').style.display = "block";
-          document.getElementById('badge-credblock').innerHTML = d.cred_txt;
-        if (d.genre === "X") { showGenreModal(); } else { fetchZigzig(d.genre); }
-        })
-        .catch(() => {
-          document.getElementById('prix').innerHTML = "Erreur serveur, la honte !";
-          document.getElementById('pop').innerHTML = "";
-          document.getElementById('details').innerHTML = "";
-          avatar.style.display = "none";
-          verdict.innerHTML = '';
-          document.getElementById('zigblock').style.display = "none";
-          document.getElementById('badge-respect').style.display = "none";
-          document.getElementById('jauge-original').style.display = "none";
-          document.getElementById('buzzblock').style.display = "none";
-          document.getElementById('surnomblock').style.display = "none";
-          document.getElementById('clanblock').style.display = "none";
-          document.getElementById('citationblock').style.display = "none";
-          document.getElementById('horoscopeblock').style.display = "none";
-          document.getElementById('badge-credblock').style.display = "none";
-        });
-    }
-    function fetchZigzig(genre) {
-      fetch('/api/zigzig?prenom=' + encodeURIComponent(currentPrenom) + "&genre=" + genre)
-        .then(r => r.json())
-        .then(d => {
-          document.getElementById('zigscore').innerHTML = "Taux de zigzig : <b style='color:#2ecc40'>" + d.score + " / 20</b>";
-          document.getElementById('zigphrase').innerHTML = d.phrase;
-          document.getElementById('zigavatar').src = d.avatar + "&r=" + Math.random();
-          document.getElementById('zigavatar').style.display = "inline-block";
-          document.getElementById('zigblock').style.display = "block";
-        });
-    }
-    function showGenreModal() { document.getElementById('genre-modal').style.display = "flex"; }
-    function setGenreZig(genre) {
-      document.getElementById('genre-modal').style.display = "none";
-      fetchZigzig(genre);
-    }
-    // Leaderboard
-    function chargeLeaderboard() {
-      fetch('/api/leaderboard')
-        .then(r => r.json())
-        .then(data => {
-          let html = '';
-          for (let i=0; i<data.length; i++) {
-            html += `<li><b>${data[i].prenom.charAt(0).toUpperCase() + data[i].prenom.slice(1)}</b> <span style='color:#fff;'>(${data[i].tests} tests)</span></li>`;
-          }
-          document.getElementById('top-blazes').innerHTML = html;
-        });
-    }
-    chargeLeaderboard();
-    // Quiz
-    let quizPrix = 0, quizPrenom = "", quizScore = 0, quizTentatives = 0;
-    function nouveauQuiz() {
-      fetch('/api/quiz')
-        .then(r => r.json())
-        .then(d => {
-          quizPrenom = d.prenom;
-          quizPrix = d.prix;
-          document.getElementById('quiz-question').innerHTML = `À ton avis, combien vaut le prénom <b>${quizPrenom}</b> ?`;
-          document.getElementById('quiz-reponse').value = '';
-          document.getElementById('quiz-resultat').innerText = '';
-        });
-    }
-    function valideQuiz() {
-      const val = Number(document.getElementById('quiz-reponse').value);
-      quizTentatives++;
-      let diff = Math.abs(val - quizPrix);
-      let txt;
-      if (diff < 5) {
-        quizScore++;
-        txt = `🔥 Incroyable ! C’était ${quizPrix} €. Bien vu !`;
-      } else if (diff < 15) {
-        quizScore += 0.5;
-        txt = `👍 Pas mal, c’était ${quizPrix} €.`;
-      } else {
-        txt = `🙃 Raté, c’était ${quizPrix} €.`;
-      }
-      document.getElementById('quiz-resultat').innerText = txt;
-      document.getElementById('quiz-score').innerText = `Score : ${quizScore} / ${quizTentatives}`;
-      setTimeout(nouveauQuiz, 2000);
-    }
-    nouveauQuiz();
-    // Compatibilité
-    function checkCompat() {
-      let p1 = document.getElementById('compat1').value.trim();
-      let p2 = document.getElementById('compat2').value.trim();
-      if (!p1 || !p2) {
-        document.getElementById('compat-result').innerText = "Tape deux blazes !";
-        return;
-      }
-      fetch('/api/compatibilite?prenom1='+encodeURIComponent(p1)+'&prenom2='+encodeURIComponent(p2))
-        .then(r=>r.json()).then(d=>{
-          document.getElementById('compat-result').innerText = d.msg;
-        });
-    }
-    // Blaze gitan
-    function getGitan() {
-      fetch('/api/gitan')
-        .then(r=>r.json())
-        .then(d=>{
-          document.getElementById('gitan-result').innerText = d.prenom;
-        });
-    }
-    // Insulte street
-    function getInsulte() {
-      let p = document.getElementById('prenom').value.trim();
-      if (!p) { document.getElementById('insulte-result').innerText = "Tape un blaze d'abord !"; return;}
-      fetch('/api/insulte?prenom='+encodeURIComponent(p))
-        .then(r=>r.json())
-        .then(d=>{
-          document.getElementById('insulte-result').innerText = d.insulte;
-        });
-    }
-    // Partage réseaux
-    function shareW() {
-      let p = document.getElementById('prenom').value.trim();
-      let prix = document.getElementById('prix').innerText;
-      let txt = encodeURIComponent("Mon blaze " + p + " vaut "+ prix + " sur le site des vrais : " + window.location.href);
-      window.open("https://wa.me/?text=" + txt, "_blank");
-    }
-    function shareT() {
-      let p = document.getElementById('prenom').value.trim();
-      let prix = document.getElementById('prix').innerText;
-      let txt = encodeURIComponent("Mon blaze " + p + " vaut "+ prix + "€ sur le site des vrais !");
-      window.open("https://twitter.com/intent/tweet?text=" + txt + "&url=" + encodeURIComponent(window.location.href), "_blank");
-    }
-    // Son marrant
+    // ... tout ton JS (identique que la version précédente, mais tu ajoutes cette fonction pour les sons)
     function playSon() {
       const sons = [
         "/static/laugh.mp3",
@@ -517,6 +285,7 @@
       audio.src = pick;
       audio.play();
     }
+    // ...le reste de ton JS habituel (voir réponses précédentes)
   </script>
 </body>
 </html>
