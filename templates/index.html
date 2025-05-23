@@ -3,40 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <title>💸 Combien vaut ton prénom ? 💸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial, sans-serif; background: #181818; color: #fff; text-align: center; padding: 60px; }
-    input { padding: 12px; font-size: 22px; border-radius: 6px; border: none; width: 260px; }
-    button { padding: 12px 35px; font-size: 22px; border-radius: 6px; background: #2ecc40; color: #fff; border: none; cursor: pointer; margin-left: 10px; }
-    .result { margin-top: 35px; font-size: 32px; font-weight: bold; }
-    .pop { margin-top: 12px; font-size: 17px; color: #888; }
-    .footer { margin-top: 60px; color: #555; font-size: 13px; }
-    #avatar { margin-top: 40px; border-radius: 50%; border: 3px solid #2ecc40; width: 120px; display: none; }
-    #verdict { margin-top: 18px; font-size: 19px; font-weight: bold; }
-    @media (max-width: 600px) {
-      body { padding: 20px; }
-      input, button { font-size: 16px; }
-      .result { font-size: 24px; }
+    html, body { background: #181818; margin: 0; padding: 0; width: 100%; min-height: 100vh;}
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
     }
+    .container {
+      width: 100%;
+      max-width: 390px;
+      margin: 0 auto;
+      padding: 24px 10px 0 10px;
+      box-sizing: border-box;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin: 12px 0 20px 0;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #ffd700 60%, #2ecc40 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    input {
+      padding: 14px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: none;
+      width: 95%;
+      max-width: 260px;
+      margin: 0 0 10px 0;
+      background: #232323;
+      color: #fff;
+      outline: none;
+      box-shadow: 0 1px 5px #0006;
+      text-align: center;
+      transition: border 0.2s;
+    }
+    input:focus { border: 2px solid #2ecc40; }
+    button {
+      padding: 14px 40px;
+      font-size: 1.12em;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #2ecc40 60%, #ffd700 100%);
+      color: #232323;
+      border: none;
+      font-weight: bold;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      margin-left: 0;
+      margin-bottom: 20px;
+      margin-top: 5px;
+      transition: background 0.18s;
+      box-shadow: 0 1px 8px #0005;
+    }
+    button:active { background: #ffd700; color: #111;}
+    .result { margin-top: 25px; font-size: 2.2em; font-weight: bold; min-height: 44px;}
+    .pop { margin-top: 10px; font-size: 1.07em; color: #b2b2b2; min-height: 20px;}
+    #avatar { margin-top: 30px; border-radius: 50%; border: 3px solid #2ecc40; width: 115px; min-height: 115px; background: #1b1b1b;}
+    #verdict { margin-top: 17px; font-size: 1.2em; font-weight: bold; min-height: 28px;}
+    .footer {
+      margin-top: auto;
+      padding: 18px 0 8px 0;
+      width: 100%;
+      color: #555;
+      font-size: 0.98em;
+      text-align: center;
+      background: none;
+      line-height: 1.5;
+    }
+    .footer a { color: #2ecc40; text-decoration: underline; }
+    @media (max-width: 600px) {
+      .container { max-width: 100vw; padding: 10px 0 0 0; }
+      h1 { font-size: 1.2em; margin: 7px 0 13px 0;}
+      input, button { font-size: 1em; padding: 11px;}
+      #avatar { width: 90px; min-height: 90px; margin-top: 20px;}
+      .result { font-size: 1.3em;}
+      #verdict { font-size: 1em; min-height: 22px;}
+      .footer { font-size: 0.91em; }
+    }
+    ::selection { background: #ffd70066; }
   </style>
 </head>
 <body>
-  <h1>💸 Valeur de ton blaze 💸</h1>
-  <input type="text" id="prenom" placeholder="Tape ton prénom...">
-  <button onclick="calculePrix()">Calcule !</button>
-  <div class="result" id="prix"></div>
-  <div class="pop" id="pop"></div>
-  <img id="avatar">
-  <div id="verdict"></div>
+  <div class="container">
+    <h1>💸 Valeur de ton blaze 💸</h1>
+    <input type="text" id="prenom" placeholder="Tape ton prénom..." onkeydown="if(event.key==='Enter')calculePrix();">
+    <button onclick="calculePrix()">Calcule !</button>
+    <div class="result" id="prix"></div>
+    <div class="pop" id="pop"></div>
+    <img id="avatar" style="display:none;">
+    <div id="verdict"></div>
+  </div>
   <div class="footer">
     <b>Source : 
-      <a href="https://www.data.gouv.fr/fr/datasets/fichier-des-prenoms-depuis-1900/" 
-         style="color:#2ecc40" target="_blank">data.gouv.fr</a>
+      <a href="https://www.data.gouv.fr/fr/datasets/fichier-des-prenoms-depuis-1900/" target="_blank">data.gouv.fr</a>
     </b>
     <br>
     Projet signé <b>s00r1</b> – 2024
   </div>
   <script>
-    // Massive seed et styles list for memes
+    // Massivement enrichi pour la street
     const fakeAvatarSeeds = [
       "clown", "alien", "404", "dinomk", "meme", "skull", "robot", "banana", "spaceinvader", "unicorn", "zebi",
       "chicken", "pigeon", "rat", "ninja", "dj", "wizard", "ghost", "cowboy", "pirate", "vampire", "baba", "drill",
