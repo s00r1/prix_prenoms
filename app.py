@@ -66,8 +66,23 @@ INSULTES = [
     "T’es plus rare qu’un kebab végane."
 ]
 PRENOMS_GITANS = [
-    "Zlatko", "Donovan", "Nikita", "Mickaëlo", "Django", "Manouchka", "Angelo", "Tzigane", "Mirko", "Rodrigo", "Ludivina", "Petra", "Mélinda", "Raymondo", "Maria-La-Loco"
+    "Zlatko", "Donovan", "Nikita", "Mickaëlo", "Django", "Manouchka", "Angelo", "Tzigane",
+    "Mirko", "Rodrigo", "Ludivina", "Petra", "Mélinda", "Raymondo", "Maria-La-Loco",
+
+    # Prénoms hommes
+    "Santino", "Zoran", "Yanko", "Milovan", "Ionel", "Stefan", "Alonzo", "Vano", "Ruben",
+    "Isandro", "Petru", "Cosmin", "Jasko", "Jovan", "Nicolae", "Aleko", "Sacha", "Ionut",
+    "Tchico", "Mariano", "Zorba", "Alexandro", "Sulejman", "Lubo", "Yuri", "Damiano",
+
+    # Prénoms femmes
+    "Esmeralda", "Nadja", "Ludmila", "Svetlana", "Sabrina", "Gordana", "Tatiana", "Yelena",
+    "Zina", "Tania", "Anastazia", "Sofika", "Marushka", "Flamenca", "Sorina", "Calista",
+    "Katarina", "Velma", "Ramona", "Mirella", "Zorana", "Giuliana", "Chayana", "Shéhérazade",
+
+    # Blazes mixtes et stylés
+    "Louna-Rose", "Angélo-Djo", "Zéfir", "Djo", "Zinga", "Tanya-Luna", "Manolo", "Mikaï", "Tano", "Joska"
 ]
+
 
 def lire_blaze_hits():
     if os.path.exists(BLAZE_HITS_PATH):
