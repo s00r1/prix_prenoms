@@ -17,8 +17,6 @@ genres_dict = {}
 SURNOMS_STREET = [
     "La Menace", "Turbo", "Le Sang", "Le Chacal", "El Maestro", "La Rafale", "Big Mac", "Le Pigeon", "Le Fou", "La Boulette",
     "Grillav", "La Foudre", "El Gitan", "Bougnoule", "Don Kebab", "El Boulette", "Ratatouille", "El Poulet", "La Rafale", "Cobra",
-
-    # ADDITIONS VIOLENTES
     "Le Michto", "Kalash Douceur", "P’tit Grillé", "MC Semoule", "La Tige", "Zinzin du 7-5", "Pépito", "Frérot Shlag", "Tonton Bicot",
     "Le Ténébreux du Lavomatic", "Le Daron Fantôme", "ChichaMan", "Le Détourneur", "DJ PLS", "El Barbier Fou", "Zébulon", "Zarma Flex",
     "Don Coucous", "Soso la Saucisse", "Captain Brochette", "Bastos Soft", "Yaya l’Errant", "Le Transpalette", "Tchico la Plage",
@@ -28,8 +26,30 @@ SURNOMS_STREET = [
     "Tchoupi le Rôdeur", "Kalash Sans Chargeur", "Le Gars d’en Face", "Boutch le Flou", "Foufou du Banc", "Le Mec au Fond du Snap",
     "Le Fils à Personne", "Rebeu Ancestral", "Chef Sans Forfait", "Momo du Dernier", "Tonton Placard", "La Fringale",
     "Le Zarma King", "Choufman", "Mika la Rumeur", "El Biloute", "El Bagarre", "L'Inspecteur Barrette", "L’Éclair du 93",
-    "Captain Injustifié", "Sultan Binks", "Hakim Zarma", "Karim la Panique", "Abdel Fatal", "Le Chomeur Suprême"
+    "Captain Injustifié", "Sultan Binks", "Hakim Zarma", "Karim la Panique", "Abdel Fatal", "Le Chomeur Suprême",
+
+    # NOUVELLE VAGUE SAUVAGE
+    "La Gomme", "Double Appel", "Tonton Wi-Fi", "Coup de Trafalgar", "Papou le Flagrant", "Nassim la Bagarre", "Rayon Frais",
+    "Omar Deux Fois", "Younes l’Absent", "Le Couscous Avarié", "Le Kichta Mystique", "Le Flou du Tiers Monde", "Momo Jambon",
+    "Brigadier Détour", "La Clé Perdue", "Le 14e Membre", "Kheysar L’Inutile", "MC Télécommande", "La Bascule", "Nabil Frisson",
+    "Le Bouffon Béni", "L’Âme en Fuite", "Petit Cachet", "Le Revenant du T2", "La Peur du Kebab", "Zoubir Tension", "Aladin du Bat 5",
+    "Le Sosie du Problème", "Abdel Bon Plan", "Frite Cosmique", "Frelon du PMU", "Chef d’Antenne", "Ali des Archives", "Tonton Chaleur",
+    "Moktar Surprise", "Mec de l’Ombre Portée", "Réda le Brûlé", "Cousin Courrier", "Chico Chiffon", "Brahim la Faille",
+    "Samy le Bancal", "Salim Baisse les Yeux", "Captain Fenêtre Fermée", "El Spaghetti", "Le Zbeul en Pyjama", "Le Crâne du 5e",
+    "Junior du Rappel", "Le Silencieux", "Le Bruit du Néant", "Frangin du Gars de l’Autre Fois", "Le Lourd Légendaire",
+    "El Canapé", "Tagueur de Pleurs", "DJ Loukoum", "Bilal le Bug", "Shlagguito", "Mec au Vieux Clignotant", "Hicham Tristesse",
+    "Tonton Quota", "Le Détail qui Tue", "La Clope Maudite", "L’Amnésique Heureux", "Badre l'Élément", "Zak l’Oubli",
+    "Le Dernier à Partir", "Le Mec Qui Dit Rien", "Tonton Recharge", "Le Mâcheur de Bêtises", "Hakim la Vague", "Le Flou Serein",
+    "L’Éclipse du Banc", "La Relique du Quartier", "Mister Rien à Voir", "L’Insoutenable Rebeu Léger", "Mec Sans Début",
+    "Zeko l’Erreur de Casting", "La Légende Hors Plan", "Chef de Rien", "Bouchon du Destin", "Khaled le Coincé",
+    "Le Réseaux Social Humain", "L’Arrêt d’Origine", "Aymen la Voix Off", "Yaz le Faux Calme", "Tonton Couvre-Feu",
+    "Rebeu de l’Arrière-Boutique", "La Carte SIM Sans Abonnement", "Billy le Détour", "Jad le Tamis", "Souf le Tardif",
+    "Le Cauchemar de la CAF", "La Pause Longue", "Couscous Express", "El Pastaga", "Le Mouchoir de Trop",
+    "Chef Sauce Blanche", "La Poisse Magnétique", "Le Silence Qui Rappelle", "L’Erreur Acceptée", "L’Écho du Bendo",
+    "MC Sans Beat", "Ibrahim le Sosie d’Ibrahim", "Le Double Mystère", "La Douleur Passive", "Slim le Net",
+    "Sami le Sans-Fil", "Reda l’Optionnelle", "Zino PLS", "Tonton Gars Sûr Mais Chelou"
 ]
+
 
 CLANS = [
     "Famille du Ghetto",
@@ -42,8 +62,6 @@ CLANS = [
     "Ligue des Babtous",
     "Famille Siffredi",
     "La Street Family",
-
-    # ADDITIONS ENORMES
     "Ordre des Survets Sacrés",
     "Tribu des Yeux Rouges",
     "Secte des Sans-Caf",
@@ -82,8 +100,58 @@ CLANS = [
     "Fraternité des Grillav Oubliés",
     "Coalition des Balcons en Chicha",
     "Cercle Secret des Djeunz Égarés",
-    "Congrégation des Paranoïas Partagées"
+    "Congrégation des Paranoïas Partagées",
+
+    # NOUVEAUX CLANS – VAGUE APOCALYPSE
+    "Temple des Sans-Batterie",
+    "Garde Royale des Télés 80cm",
+    "Secte des Sandales Chaussettes",
+    "Famille des Chargeurs Universels",
+    "Dynastie du Rideau Tiré",
+    "Brigade des Barbes Inégales",
+    "Collectif du Frigo Vide",
+    "Les Gardiens du Palier C",
+    "Confédération des Sandwicheries Oubliées",
+    "Clan du Survêt Banni",
+    "Coalition du Banc Brûlé",
+    "Association des Tontons Timbrés",
+    "Secte des Lits Pas Faits",
+    "Union des Semelles Parfumées",
+    "Syndicat des Cousins Trop Louches",
+    "Compagnie des Dormeurs Diurnes",
+    "État Indépendant du Canapé de Mamie",
+    "Clan des Mecs Qui Disent Rien Mais Viennent",
+    "La Horde des Snappeurs Inconnus",
+    "Fratrie des Faux Forts",
+    "Réseau International du Daron Mystère",
+    "Club des Retours de Flammes",
+    "Brigade des Chaussons Oubliés",
+    "Ordre des Têtes Baisées",
+    "Dynastie des Faux Invités",
+    "Clan des Meufs Bizarrement Trop Gentilles",
+    "Famille des Boulets du Groupe WhatsApp",
+    "Collectif des Racleurs de Fond",
+    "Empire des Pleurs Sans Larmes",
+    "Crew du Silence Trop Long",
+    "Tribu des AirPods Égarés",
+    "Conglomérat des Plans Qui Tombent à l’Eau",
+    "Front Populaire de l’Odeur de Chicha Froide",
+    "République des Blessures Invisibles",
+    "Ordre Suprême du Pote Jamais à l’Heure",
+    "Famille Royale des Bails Qui S’éteignent",
+    "Confrérie du Daron qui Disparaît Quand Faut Payer",
+    "Alliance des Cas Sociaux Ambitieux",
+    "Nation Unie des Cigarettes Écrasées",
+    "Clan du Gars au Fond Qui Dit Jamais Rien",
+    "Coalition des Vieux Jogging Nike Détendus",
+    "Secte des Frigos qui Rendent que de l’Air",
+    "Confédération des Darons Mystiques",
+    "Union des Gens Qui Viennent Jamais au Barbecue",
+    "Dynastie du Couscous Mal Dosé",
+    "Ligue des Quarts de Frères",
+    "Ordre des Potos qui Dorment Trop"
 ]
+
 
 CITATIONS = [
     "Avec un blaze pareil, tu croques la vie à pleine dents, wallah.",
@@ -96,8 +164,6 @@ CITATIONS = [
     "Avec un blaze comme ça, même les condés veulent un selfie.",
     "Ton prénom résonne jusqu’au bled.",
     "T’es la légende du Hall 7, wallah.",
-
-    # ADDITIONS ÉNORMES
     "T’as un blaze qu’on grave sur les murs et dans les cœurs.",
     "Même les voyants te voient arriver dans leurs visions.",
     "T’es pas une légende urbaine, t’es une prophétie de quartier.",
@@ -121,8 +187,50 @@ CITATIONS = [
     "T’as l’élégance d’un gitan en costume trois pièces.",
     "T’as pas percé, t’as transpercé le game.",
     "T’es la démo vivante qu’on peut être loyal sans être con.",
-    "Ton blaze, c’est du feu d’artifice sur fond de darwa."
+    "Ton blaze, c’est du feu d’artifice sur fond de darwa.",
+    "Même les pigeons te laissent passer sur les toits.",
+    "T’as le style d’un braquage silencieux.",
+    "Quand tu parles, les murs du quartier écoutent.",
+    "Ton prénom, c’est une légende qu’on se transmet au lavomatique.",
+    "T’as mis du respect sur le blaze avant même de naître.",
+    "Ton aura donne envie de faire le bien (ou le pire).",
+    "Ton prénom sonne comme une punchline bénie par Booba et Dieu.",
+    "Même les daronnes du quartier veulent que t’épouses leur fille.",
+    "T’as ramené la noblesse dans le kebab.",
+    "Ton existence donne du sens au mot « flow ».",
+    "T’es le feu sacré du barbecue du quartier.",
+    "Ton prénom devrait être enseigné en SEGPA avancée.",
+    "T’as mis la honte à tous les Kevin de la terre.",
+    "Ton prénom se faufile entre les balles.",
+    "T’es le seul qui peut frimer avec un survêt et un cœur pur.",
+    "T’as la démarche d’un prophète et l’humour d’un shlag.",
+    "T’as la prestance d’un daron qui paye cash.",
+    "Ton prénom pue la victoire, même en galère.",
+    "Même Siri bug quand elle essaye de prononcer ton blaze.",
+    "T’es un miracle entre deux plans foireux.",
+    "Ton nom est tatoué dans le cœur des vrais.",
+    "T’as l’allure d’un mec qui dit peu, mais frappe fort.",
+    "Ton blaze fait peur aux huissiers.",
+    "T’es l’espoir du quartier, même sans diplôme.",
+    "Quand tu dors, les rêves des autres parlent de toi.",
+    "T’as l’instinct du chacal et l’âme du prophète.",
+    "Ton prénom flotte dans l’air comme une odeur de grillade bénie.",
+    "T’as des ennemis mais même eux te respectent en cachette.",
+    "T’as le charisme d’un boss de jeu vidéo niveau secret.",
+    "Même les profs t’appelaient avec respect à l’appel.",
+    "T’as un regard qui valide ou annule une carrière.",
+    "T’as survécu à la street, aux ex, aux darons, t’es invincible.",
+    "Ton prénom ouvre les portes même sans interphone.",
+    "T’es le seul à pouvoir foutre le feu avec un regard calme.",
+    "T’es un proverbe vivant, brodé en capuche sur la vérité.",
+    "Ton existence c’est comme une punchline bien placée : elle reste.",
+    "T’es la preuve que les rois naissent aussi en HLM.",
+    "Ton prénom a plus de poids que l’avis de la juge.",
+    "T’as un blaze qui pourrait apaiser un contrôle de police.",
+    "Quand tu passes, même les pigeons changent de trottoir.",
+    "T’as un flow ancestral, genre transmis par les gitans célestes."
 ]
+
 
 HOROSCOPE = [
     "Aujourd'hui tu vas esquiver les condés, inchallah.",
@@ -135,8 +243,6 @@ HOROSCOPE = [
     "T’as la vibe, profite, mais oublie pas la mif.",
     "Quelqu’un va t’appeler, ça va changer ta journée.",
     "C’est ton jour de gloire… ou de galère, choisis bien.",
-
-    # ADDITIONNEL
     "Mars est en clash avec Mercure, évite les embrouilles à la chicha.",
     "T'as un face-à-face avec ton destin dans l’ascenseur du bâtiment C.",
     "Ne réponds pas aux appels inconnus, c’est pas ton jour pour te faire cramer.",
@@ -161,8 +267,51 @@ HOROSCOPE = [
     "Ce soir t’as un rêve bizarre. C’est pas juste un rêve, c’est un message du bendo astral.",
     "Méfie-toi de l’eau plate aujourd’hui. Tout ce qui est calme, cache un traquenard.",
     "Les étoiles te murmurent : évite les placements cryptos chelous aujourd’hui.",
-    "Ton blaze va sortir de la bouche d’un ancien – t’es dans les légendes ou les dossiers ?"
+    "Ton blaze va sortir de la bouche d’un ancien – t’es dans les légendes ou les dossiers ?",
+
+    # NOUVELLES PROPHÉTIES STREET-ASTRAL
+    "La voisine du 3e va te porter chance ou t’envoyer l’Ayoub – à toi de voir.",
+    "Une barrette tombée du ciel, mais c’est peut-être un piège des astres.",
+    "Tu vas croiser ton double maléfique chez le kebabier.",
+    "Le cosmos t’offre une pause CAF surprise aujourd’hui.",
+    "Ton daron astral te surveille, fais pas n’importe quoi à la gare.",
+    "T’as une aura de millionnaire, mais ton compte dit non.",
+    "Quelqu’un te ment aujourd’hui : regarde ses shoes, ça trahit.",
+    "Ton destin passe par un coup de téléphone à 3h27 du mat.",
+    "Les étoiles valident ton survêt, pas ton attitude.",
+    "T’as la vibe du prophète… sauf que t’as oublié le code du hall.",
+    "Un ancien t’observe. S’il te salue, t’es béni jusqu’à jeudi.",
+    "Un sandwich va décider de ton avenir amoureux, wallah.",
+    "Ton âme soeur est peut-être derrière ce snap inconnu.",
+    "Tu vas entendre ton prénom dans un endroit chelou – sois prêt.",
+    "La Poste astrale te prépare un courrier chelou. Ouvre avec des gants.",
+    "Tu vas avoir une révélation en nettoyant tes Air Force.",
+    "Si tu tombes aujourd’hui, c’est que l’univers veut que tu regardes sous le banc.",
+    "Jupiter t’envoie du love, mais c’est livré par un pote toxique.",
+    "T’as un flair cosmique aujourd’hui, utilise-le pour éviter les embrouilles.",
+    "Ton horoscope a été censuré, mais sache que c’est CHAUD.",
+    "Un kebab de trop peut changer ta trajectoire karmique.",
+    "La lune te veut du bien, sauf si t’insultes un chauffeur Uber.",
+    "Tu vas rêver d’un truc bizarre. C’est pas un rêve, c’est un trailer.",
+    "Une daronne va te sauver la vie sans même le savoir.",
+    "T’as un pouvoir mystique quand t’as les mains dans les poches.",
+    "Un mec louche te sourit ? C’est un test cosmique. Échoue pas.",
+    "Le vent souffle en ta faveur, mais éteins ton bédo stp.",
+    "Ton prochain fou rire va te faire oublier un vrai souci. Laisse-le venir.",
+    "Le quartier t’appelle. T’écoute ou t’ignores, les étoiles regardent.",
+    "Ton karma a reset cette nuit. Fais gaffe à ce que tu reconstruis.",
+    "Un ancien du bled pense à toi. Force ou malédiction ? À toi d’trancher.",
+    "Ton prénom circule en silence, t’es dans une prophétie oubliée.",
+    "Ton snap d’hier va changer une vie. Peut-être la tienne.",
+    "Ton aura fait bugger un distributeur ce matin. Respect.",
+    "Le soleil t’aime, mais l’ombre te suit. Éclaire tes choix.",
+    "Un animal te fixe aujourd’hui ? Pose-lui une vraie question intérieure.",
+    "Ne perds pas ton temps à prouver des choses à des gens éclatés.",
+    "T’as survécu à la semaine, les planètes t’envoient un big up.",
+    "Un gosse inconnu va te dire un truc qui va te retourner le cerveau.",
+    "T’as un bonus de charisme valable jusqu’à minuit. Utilise-le bien."
 ]
+
 
 CRED_BADGES = [
     (100, "👑 Dieu du bendo – Même les anciens t’écoutent sans parler."),
@@ -271,15 +420,28 @@ PRENOMS_GITANS = [
     "Santino", "Zoran", "Yanko", "Milovan", "Ionel", "Stefan", "Alonzo", "Vano", "Ruben",
     "Isandro", "Petru", "Cosmin", "Jasko", "Jovan", "Nicolae", "Aleko", "Sacha", "Ionut",
     "Tchico", "Mariano", "Zorba", "Alexandro", "Sulejman", "Lubo", "Yuri", "Damiano",
+    "Gino", "Miklos", "Tibor", "Sandro", "Luigi", "Juanito", "Ibrahim", "Djanis", "Rachid",
+    "Vlado", "Florin", "Gheorghe", "Mateo", "Jordi", "Manuelito", "Nicolai", "Josip", "Sanel",
+    "Kemo", "Aleksandar", "Roberto", "Bogdan", "Enzo", "Mario", "Ivan", "Teo", "Bobby", "Raulito",
+    "Carmelo", "Gaspard", "Toni", "Ignazio", "Amar", "Nicolo", "Radu", "Dejan", "Ferdi",
 
     # Prénoms femmes
     "Esmeralda", "Nadja", "Ludmila", "Svetlana", "Sabrina", "Gordana", "Tatiana", "Yelena",
     "Zina", "Tania", "Anastazia", "Sofika", "Marushka", "Flamenca", "Sorina", "Calista",
     "Katarina", "Velma", "Ramona", "Mirella", "Zorana", "Giuliana", "Chayana", "Shéhérazade",
+    "Mirella", "Graciela", "Rosita", "Dolorès", "Malika", "Jazmina", "Dalida", "Alma", "Bettina",
+    "Lucinda", "Mirabela", "Kassandra", "Estrella", "Noélia", "Violetta", "Fadila", "Eliska", "Bojana",
+    "Liliana", "Lavinia", "Carmela", "Elena-Rose", "Amalia", "Lilia", "Faïza", "Nicoleta", "Guliana",
+    "Mariya", "Zorana", "Fiorella", "Luana", "Vanja", "Milica", "Gypsy-Rose", "Nahia", "Luna-Mina",
 
-    # Blazes mixtes et stylés
-    "Louna-Rose", "Angélo-Djo", "Zéfir", "Djo", "Zinga", "Tanya-Luna", "Manolo", "Mikaï", "Tano", "Joska"
+    # Blazes mixtes & légendaires
+    "Louna-Rose", "Angélo-Djo", "Zéfir", "Djo", "Zinga", "Tanya-Luna", "Manolo", "Mikaï", "Tano", "Joska",
+    "Santino-Loup", "Rubi-Jo", "Yuri-Zen", "Chico-Fuego", "Tzigano", "Rafaï", "Loulou-Moon", "Adem-Jazz",
+    "Zarko-Lio", "Kinaï", "Noa-Lazare", "Romyka", "Lucaï", "Djin-Rose", "Izaïa", "Sachaï", "Gino-Mika",
+    "Djamilo", "Nino-Soleil", "Elio-Jazz", "Solyana", "Rio-Kalou", "Jasko-Moon", "Yuna-Tzigane", "Néo-Roma",
+    "Karlo-Swing", "Mani-Kosmo", "Carmen-Jo", "Vita-Luna"
 ]
+
 
 
 def lire_blaze_hits():
