@@ -63,8 +63,42 @@ INSULTES = [
     "La street t’a oublié avant même de te connaître.",
     "T’es en soldes toute l’année avec ce blaze.",
     "Même les robots ont plus de style.",
-    "T’es plus rare qu’un kebab végane."
+    "T’es plus rare qu’un kebab végane.",
+
+    # NOUVELLES INSULTES
+    "Ton prénom sonne comme une appli Android pas finie.",
+    "T’as été nommé par un bug d’IA wallah.",
+    "Même les Télétubbies t’auraient recalé.",
+    "Ton blaze ? C’est un patch note foireux.",
+    "T’as le prénom d’un pigeon en PLS.",
+    "Ton blaze, c’est du AirFryer sans air ni fryer.",
+    "T’es la version wish d’un blaze stylé.",
+    "T’as été codé en HTML sans CSS.",
+    "Même un captcha te laisserait passer sans te tester.",
+    "T’as un prénom à te faire recaler d’un camp gitan.",
+    "T’es un 404 de la dignité, zebi.",
+    "T’as le flow d’un PowerPoint de 6e.",
+    "Ton blaze fait rire les élèves d’ULIS.",
+    "Même les bots de scam veulent pas de toi.",
+    "T’as un blaze de tiktokeur refoulé par la CNIL.",
+    "Même les témoins de Jéhovah zappent ta sonnette.",
+    "Ton prénom c’est un ban direct sur Discord.",
+    "T’as un blaze qui sent la vanne périmée.",
+    "Avec ce prénom, t’es même pas invité aux barbecues.",
+    "Ton prénom c’est du spam émotionnel.",
+    "T’as été généré par ChatGPT version bourrée.",
+    "Ton blaze fait saigner les oreilles de l’alphabet.",
+    "T’as le charisme d’un ticket de caisse froissé.",
+    "Même les schmitts veulent pas te contrôler.",
+    "Ton prénom, c’est l’écran bleu de la vie.",
+    "On dirait que t’as été nommé par un stagiaire sourd.",
+    "Ton blaze a été généré par un bébé manouche sous skunk.",
+    "Même les gitans t’appellent 'frérot' sans te calculer.",
+    "Ton blaze ? C’est une faute d’orthographe validée.",
+    "T’es le seul à porter ce prénom, et c’est pas un compliment.",
+    "Ton blaze rime avec PLS."
 ]
+
 PRENOMS_GITANS = [
     "Zlatko", "Donovan", "Nikita", "Mickaëlo", "Django", "Manouchka", "Angelo", "Tzigane",
     "Mirko", "Rodrigo", "Ludivina", "Petra", "Mélinda", "Raymondo", "Maria-La-Loco",
