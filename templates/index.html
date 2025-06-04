@@ -151,6 +151,8 @@
     <h1>💸TEST TON BLAZE💸</h1>
     <input type="text" id="prenom" placeholder="Tape ton prénom..." onkeydown="if(event.key==='Enter')calculePrix();">
     <button onclick="calculePrix()">Calcule !</button>
+    <button onclick="getRandomRare()">Surprends-moi !</button>
+    <div id="random-rare-result" style="margin-top:6px;min-height:18px;color:#2ecc40;"></div>
     <div class="result" id="prix"></div>
     <div class="pop" id="pop"></div>
     <div id="details"></div>
@@ -509,6 +511,17 @@
         }).catch(() => {
           document.getElementById('battle-result').innerText = 'Erreur serveur, réessaie.';
         });
+      }
+      // Prénom rare aléatoire
+      function getRandomRare() {
+        fetch('/api/random-rare')
+          .then(r => r.json())
+          .then(d => {
+            if (!d.prenom) return;
+            document.getElementById('prenom').value = d.prenom;
+            document.getElementById('random-rare-result').innerText = 'Prénom rare : ' + d.prenom;
+            calculePrix();
+          });
       }
       // Blaze gitan
       function getGitan() {

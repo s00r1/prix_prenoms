@@ -648,6 +648,14 @@ def api_quiz():
     prix = min(200, max(10, round(prix, 2)))
     return jsonify({"prenom": quiz_prenom.capitalize(), "prix": prix})
 
+@app.route('/api/random-rare')
+def api_random_rare():
+    rares = [p for p, n in prenoms.items() if n < 50]
+    if not rares:
+        return jsonify({"prenom": None})
+    pick = random.choice(rares)
+    return jsonify({"prenom": pick.capitalize()})
+
 @app.route('/api/zigzig')
 def zigzig():
     prenom = request.args.get("prenom", "").strip().lower()
