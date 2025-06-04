@@ -204,6 +204,14 @@
       <button onclick="checkCompat()" style="font-size:0.97em; margin-left:9px;">Tester !</button>
       <div id="compat-result" style="margin-top:9px;min-height:22px;"></div>
     </div>
+    <!-- BATTLE DE BLAZES -->
+    <div class="street-bloc">
+      <h2>⚔️ Battle de Blazes</h2>
+      <input type="text" id="battle1" placeholder="Blaze 1" style="width:110px;">
+      <input type="text" id="battle2" placeholder="Blaze 2" style="width:110px;">
+      <button onclick="battleBlazes()" style="font-size:0.97em; margin-left:9px;">Fight !</button>
+      <div id="battle-result" style="margin-top:9px;min-height:22px;"></div>
+    </div>
     <!-- PRENOM GITAN -->
     <div class="street-bloc">
       <h2>🔥 Génère ton blaze de gitan</h2>
@@ -461,23 +469,52 @@
     }
     nouveauQuiz();
     // Compatibilité
-    function checkCompat() {
-      let p1 = document.getElementById('compat1').value.trim();
-      let p2 = document.getElementById('compat2').value.trim();
-      if (!p1 || !p2) {
-        document.getElementById('compat-result').innerText = "Tape deux blazes !";
-        return;
+      function checkCompat() {
+        let p1 = document.getElementById('compat1').value.trim();
+        let p2 = document.getElementById('compat2').value.trim();
+        if (!p1 || !p2) {
+          document.getElementById('compat-result').innerText = "Tape deux blazes !";
+          return;
+        }
+        fetch('/api/compatibilite?prenom1='+encodeURIComponent(p1)+'&prenom2='+encodeURIComponent(p2))
+          .then(r=>r.json()).then(d=>{
+            document.getElementById('compat-result').innerText = d.msg;
+          });
       }
-      fetch('/api/compatibilite?prenom1='+encodeURIComponent(p1)+'&prenom2='+encodeURIComponent(p2))
-        .then(r=>r.json()).then(d=>{
-          document.getElementById('compat-result').innerText = d.msg;
+      // Battle de blazes
+      function battleBlazes() {
+        let b1 = document.getElementById('battle1').value.trim();
+        let b2 = document.getElementById('battle2').value.trim();
+        if (!b1 || !b2) {
+          document.getElementById('battle-result').innerText = 'Tape deux blazes !';
+          return;
+        }
+        Promise.all([
+          fetch('/api/prix-prenom?prenom=' + encodeURIComponent(b1)).then(r => r.json()),
+          fetch('/api/prix-prenom?prenom=' + encodeURIComponent(b2)).then(r => r.json())
+        ]).then(([d1, d2]) => {
+          if (typeof d1.prix !== 'number' || typeof d2.prix !== 'number') {
+            document.getElementById('battle-result').innerText = 'Erreur serveur, réessaie.';
+            return;
+          }
+          let msg;
+          if (d1.prix > d2.prix) {
+            msg = `<b>${b1}</b> éclate <b>${b2}</b> avec ${d1.prix} € !`;
+          } else if (d2.prix > d1.prix) {
+            msg = `<b>${b2}</b> éclate <b>${b1}</b> avec ${d2.prix} € !`;
+          } else {
+            msg = `Égalité parfaite à ${d1.prix} € !`;
+          }
+          document.getElementById('battle-result').innerHTML = msg;
+        }).catch(() => {
+          document.getElementById('battle-result').innerText = 'Erreur serveur, réessaie.';
         });
-    }
-    // Blaze gitan
-    function getGitan() {
-      fetch('/api/gitan')
-        .then(r=>r.json())
-        .then(d=>{
+      }
+      // Blaze gitan
+      function getGitan() {
+        fetch('/api/gitan')
+          .then(r=>r.json())
+          .then(d=>{
           document.getElementById('gitan-result').innerText = d.prenom;
         });
     }
