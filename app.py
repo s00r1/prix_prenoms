@@ -652,17 +652,22 @@ def api_quiz():
 def zigzig():
     prenom = request.args.get("prenom", "").strip().lower()
     genre = request.args.get("genre", "M")  # "M", "F", "X"
+    freq = prenoms.get(prenom, 0)
     n_lettres = len(prenom)
     n_voyelles, n_consonnes = compter_voyelles_consonnes(prenom)
     n_rares = compter_lettres_rares(prenom)
+
+    freq_factor = 1 - (math.log(freq + 1) / math.log(FREQ_MAX + 1))
+
     score = 5
-    score += max(0, n_lettres - 4) * 1.5
-    score += n_voyelles * 0.8
-    score += n_consonnes * 1.1
-    score += n_rares * 3.5
+    score += freq_factor * 4
+    score += max(0, n_lettres - 4) * 1
+    score += n_voyelles * 0.5
+    score += n_consonnes * 0.7
+    score += n_rares * 2
     if "-" in prenom or "'" in prenom:
-        score += 1.5
-    score += random.uniform(-2, 2)
+        score += 1
+    score += random.uniform(-1.5, 1.5)
     score = int(max(0, min(20, round(score))))
     if genre == "F":
         phrases = [
