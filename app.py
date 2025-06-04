@@ -480,6 +480,8 @@ def incrementer_compteur():
 
 def charger_prenoms():
     global prenoms, genres_dict
+    if not os.path.exists(CSV_PATH):
+        raise FileNotFoundError(f"Missing {CSV_PATH}. Download from data.gouv.fr")
     prenoms = {}
     genre_raw = {}
     with open(CSV_PATH, encoding='utf-8') as f:
