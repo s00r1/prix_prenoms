@@ -1,0 +1,6 @@
+__pycache__/
+blaze_hits.json
+compteur.txt
+prenom.csv
+*.pyc
+
