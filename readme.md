@@ -34,3 +34,8 @@
 
 ## 👊 Par la street, pour la street.
 
+## 📄 Licence
+
+Ce projet est distribué sous licence MIT. Consulte le fichier [LICENSE](LICENSE)
+pour les détails.
+
